@@ -38,10 +38,12 @@ public class leer {
             show = true;
           }
         } else {
-
+if(a.contains("/vehic")) {
+  System.out.println("");
+}
             cons+=a;
             //que detecete la siguiente url para salir y cuantos parametros tiene el metodo
-            if (a.contains("  /")||a.contains("  '/")) {
+            if (a.contains("  /")||a.contains(" '/")) {
               if(!a.contains(clase)) {
 
 //                System.out.println(cons+"\n\n OTHER PATH \n\n\n");
@@ -57,7 +59,10 @@ public class leer {
               
               }}else
             if(a.contains("definitions:")) {
-              System.out.println(cons+"\n\n FINNNNNNNNNNNNNNN\n\n\n"+c);System.exit(1);
+              oldMethod=newMethod;
+          inside(cons,oldPath,oldMethod);
+          System.out.println(cons+"\n\n FINNNNNNNNNNNNNNN\n\n\n"+c);
+          System.exit(1);
             }
             else if((a.contains("get:")||a.contains("post:")||a.contains("put:")||a.contains("delete:"))&&cons.length()>40) {
               oldMethod=newMethod;
@@ -78,6 +83,78 @@ public class leer {
   }}
   
   public static void inside(String cons,String clase,String method) {
+    clase=clase.replace(" ", "");
+    boolean response=false;
+    final String  fName="- name:",fIn="in:",fType="type:",fOperation="operationId:",fref="$ref";
+    ArrayList<String>nameArray = new ArrayList<>();
+    ArrayList<String>inArray = new ArrayList<>();
+    ArrayList<String>typeArray = new ArrayList<>();
+    String operationId ="";
+    String responseType ="";
+    String refParam=null,refResponse=null;
+    boolean produces=false;
+    boolean consumes=false;
+    String[] lineas=cons.split("\r");
+    
+ for(String i:lineas) {
+   
+   if(!response) {
+     //PARAMETERS
+   if(i.contains("responses:")) {response=true;}   
+   if(i.contains("produces:")) {produces=true;}
+   if(i.contains("consumes:")) {consumes=true;}
+   
+ if(i.contains(fName)) {
+   i=i.replace(fName, "");i= i.replace(" ", "");
+   nameArray.add(i);   
+ }
+ if(i.contains(fIn)) {
+   i=i.replace(fIn, "");i= i.replace(" ", "");
+   inArray.add(i);   
+ }
+ if(i.contains(fType)) {
+   i=i.replace(fType, ""); i=i.replace(" ", "");
+   typeArray.add(i);
+ }
+ if(i.contains(fOperation)) {
+   i=i.replace(fOperation, ""); i=i.replace(" ", "");
+   operationId=i;}
+   
+   if(i.contains(fref)) {
+     i=i.replace(fref, ""); i=i.replace(" ", "");
+     refParam=i;}
+   
+ }else {
+   //RESPONSE
+   if(i.contains(fType)) {
+     i=i.replace(fType, ""); i=i.replace(" ", "");
+     responseType=i;
+   }   
+   if(i.contains(fref)) {
+     i=i.replace(fref, ""); i=i.replace(" ", "");
+     refResponse=i;}
+   
+   
+ }
+      
+    }   
+    System.out.println("\n\nSTART-----  "+clase+"\n"+cons+"\n\n FIN------");
+    System.out.println("\n\n\nBODDY\n"+clase +"\n"+method+"\n"+operationId); 
+    if(consumes) {System.out.println("Consumes Json" ); }
+    if(produces) {System.out.println("Produces Json" ); }
+    for(int i=0;i<nameArray.size();i++) {
+      System.out.println(nameArray.get(i)+"    in  "+inArray.get(i) +"    in  "+typeArray.get(i) ); 
+    }
+    if(refResponse!=null) {System.out.println("$ref  "+refParam ); }  
+    System.out.println("Response Type: "+responseType ); 
+    if(refResponse!=null) {System.out.println("$ref  "+refResponse ); }
+    System.out.println("\n\n" ); 
+  }
+}
+
+
+/*
+   public static void inside(String cons,String clase,String method) {
     clase=clase.replace(" ", "");
     ArrayList<String>nameArray = new ArrayList<>();
     ArrayList<String>inArray = new ArrayList<>();
@@ -118,4 +195,4 @@ public class leer {
     }
     System.out.println("\n\n" ); 
   }
-}
+  */

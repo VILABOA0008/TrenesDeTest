@@ -15,6 +15,13 @@ public class cosas {
     return r;
   }
   
+  public static String eliminaralgo(String s,String x) {
+    
+    String r=s.replace(x, "");
+    
+    return r;
+  }
+  
   public static String limpiarlinea(String s) {
     String r="";
     boolean stop;
