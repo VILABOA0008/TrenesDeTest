@@ -2520,6 +2520,8 @@
             $ref: '#/definitions/Station'
   /supplier:
     get:
+      tags:
+        - supplier
       summary: ''
       description: ''
       operationId: getSupplierById

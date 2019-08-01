@@ -6,13 +6,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class leer {
+public class Leer {
 
   public static void Leer()
       throws IOException {
     Integer cmetodos=0;
     String clase="";
-     Map<Integer, String> metodos = new HashMap<Integer, String>();
+    Map<String,Integer> clasMap = new HashMap<>();
+    Map<Integer,ArrayList<Boolean>> consumesMap = new HashMap<>();
+    Map<Integer,ArrayList<Boolean>> producesMap = new HashMap<>();
+    Map<Integer,ArrayList<String>> refParamMap = new HashMap<>();
+    Map<Integer,ArrayList<String>> refResponseMap = new HashMap<>();
+    Map<Integer,ArrayList<String[]>> pcoMap = new HashMap<>();
+     Map<Integer,ArrayList< ArrayList<String>>> nameMap = new HashMap<>();
+     Map<Integer, ArrayList<ArrayList<String>>>  inMap = new HashMap<>();
+     Map<Integer, ArrayList<ArrayList<String>>> typeMap= new HashMap<>();
      String lastPath="";
     boolean no = false;
     String cons="";
@@ -23,6 +31,7 @@ public class leer {
     String oldPath="",newPath="";
     boolean show = true;//para el principio
     int c = 0;
+    int cc=-1;
     String a = "";
     
     int ii;
@@ -38,51 +47,47 @@ public class leer {
             show = true;
           }
         } else {
-if(a.contains("/vehic")) {
-  System.out.println("");
-}
             cons+=a;
-            //que detecete la siguiente url para salir y cuantos parametros tiene el metodo
             if (a.contains("  /")||a.contains(" '/")) {
               if(!a.contains(clase)) {
-
-//                System.out.println(cons+"\n\n OTHER PATH \n\n\n");
                 oldPath=newPath;
                 newPath=a;
                 a=a.substring(2);
-                clase=a.split(":")[0];
-//                method=false;
+                clase=oldPath.split(":")[0];
               }else {
-//              System.out.println(cons+"\n\n FIN ROOT PATHHH  \n"+clase+"\n\n" );
                 oldPath=newPath;
                 newPath=a;
               
               }}else
             if(a.contains("definitions:")) {
               oldMethod=newMethod;
-          inside(cons,oldPath,oldMethod);
+              oldMethod=oldMethod.replace(":", "");
+          cc=inside(cc,cons,oldPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
           System.out.println(cons+"\n\n FINNNNNNNNNNNNNNN\n\n\n"+c);
-          System.exit(1);
+          Leer2.processing(clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
+
             }
             else if((a.contains("get:")||a.contains("post:")||a.contains("put:")||a.contains("delete:"))&&cons.length()>40) {
               oldMethod=newMethod;
               newMethod=a.replace(" ", "");
-          inside(cons,oldPath,oldMethod);
-          c++;
-//              System.out.println("\nSTART\n"+cons+"\n\n FIN HTTP METHOD \n\n\n");
-          a="";
-              cons=a;
+              oldMethod=oldMethod.replace(":", "");
+          cc=inside(cc,cons,oldPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
+          c++; a=""; cons=a;
           }
             a = "";
         }
       }
     }
-    System.out.println("");
-    for(int i=0;i<metodos.size();i++) {
-      System.out.println(metodos.get(i));
-  }}
-  
-  public static void inside(String cons,String clase,String method) {
+    Leer2.processing(clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
+  }
+  public static int inside(int cc,String cons,String clase,String method, 
+      Map<String, Integer> clasMap,
+      Map<Integer ,ArrayList<ArrayList<String>>> nameMap,
+      Map<Integer ,ArrayList<ArrayList<String>>> inMap,
+      Map<Integer,ArrayList<ArrayList<String>>>  typeMap,
+      Map<Integer,ArrayList<Boolean>> consumesMap,
+      Map<Integer,ArrayList<Boolean>> producesMap,
+      Map<Integer,ArrayList<String[]>> pcoMap) {
     clase=clase.replace(" ", "");
     boolean response=false;
     final String  fName="- name:",fIn="in:",fType="type:",fOperation="operationId:",fref="$ref";
@@ -91,14 +96,18 @@ if(a.contains("/vehic")) {
     ArrayList<String>typeArray = new ArrayList<>();
     String operationId ="";
     String responseType ="";
+    String stag="";
+    boolean tag=false;
     String refParam=null,refResponse=null;
     boolean produces=false;
     boolean consumes=false;
     String[] lineas=cons.split("\r");
     
  for(String i:lineas) {
-   
+   if(tag) {stag=i.replace(" ", "").replace("-", "");tag=false;}
    if(!response) {
+     if(i.contains("tags:")) {tag=true;}  
+     
      //PARAMETERS
    if(i.contains("responses:")) {response=true;}   
    if(i.contains("produces:")) {produces=true;}
@@ -139,7 +148,7 @@ if(a.contains("/vehic")) {
       
     }   
     System.out.println("\n\nSTART-----  "+clase+"\n"+cons+"\n\n FIN------");
-    System.out.println("\n\n\nBODDY\n"+clase +"\n"+method+"\n"+operationId); 
+    System.out.println("\n\n\nBODDY\n"+clase +"\n"+method+"\n"+stag+"\n"+operationId); 
     if(consumes) {System.out.println("Consumes Json" ); }
     if(produces) {System.out.println("Produces Json" ); }
     for(int i=0;i<nameArray.size();i++) {
@@ -149,6 +158,34 @@ if(a.contains("/vehic")) {
     System.out.println("Response Type: "+responseType ); 
     if(refResponse!=null) {System.out.println("$ref  "+refResponse ); }
     System.out.println("\n\n" ); 
+    clase=clase.replace(":", "").replace("\r", "");
+    Integer map=clasMap.get(stag);
+    if(map == null) {
+      cc++;
+      clasMap.put(stag, cc);
+      nameMap.put(cc, new ArrayList<>());
+      nameMap.get(cc).add(nameArray);
+      typeMap.put(cc, new ArrayList<>());
+      typeMap.get(cc).add(typeArray);
+      inMap.put(cc, new ArrayList<>());
+      inMap.get(cc).add(inArray);
+      consumesMap.put(cc, new ArrayList<>());
+      consumesMap.get(cc).add(consumes);
+      producesMap.put(cc, new ArrayList<>());
+      producesMap.get(cc).add(produces);
+      String[] pco= {clase,method,operationId};
+      pcoMap.put(cc, new ArrayList<>());
+      pcoMap.get(cc).add(pco);
+    }else {
+      nameMap.get(map).add(nameArray);
+      typeMap.get(map).add(typeArray);
+      inMap.get(map).add(inArray);
+      consumesMap.get(map).add(consumes);
+      producesMap.get(map).add(produces);
+      String[] pco= {clase,method,operationId};
+      pcoMap.get(cc).add(pco);
+    }
+    return cc;
   }
 }
 
