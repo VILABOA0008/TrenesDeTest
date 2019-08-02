@@ -11,21 +11,35 @@ public class Cc {
       ArrayList<ArrayList<String>>  typeMap,
       ArrayList<Boolean> consumesMap,
       ArrayList<Boolean> producesMap,
-      ArrayList<String[]> pcoMap) {    
+      ArrayList<String[]> pcoMap,
+      Map<String,String>typeMapping){    
     String consumes="",produces="";
     String r="";
     for(int i=0;i<producesMap.size();i++) {
+      String auxConstructor="";
+      String auxReturn="";
+if(!nameMap.get(i).isEmpty()) {
+      for(int j=0;j<nameMap.get(i).size();j++) {
+        auxReturn=nameMap.get(i).get(j)+",";
+        String in;
+        if(inMap.get(i).get(j).equalsIgnoreCase("query")) {in="@QueryParam()";}else {in="@PathParam()";}
+        auxConstructor= in+typeMapping.get(typeMap.get(i).get(j))+" "+nameMap.get(i).get(j)+",";
+        
+      }
+      auxReturn=auxReturn.substring(0,auxReturn.length()-1);
+      auxConstructor=auxConstructor.substring(0,auxConstructor.length()-1);}
+      
       if(consumesMap.get(i)) {consumes=   "@Consumes(MediaType.APPLICATION_JSON)\n" ;}
       if(producesMap.get(i)) {produces=  "@Produces(MediaType.APPLICATION_JSON)\n";}
    
     
     r+="@"+pcoMap.get(i)[1].toUpperCase()+"\n"+
-        "@Path("+pcoMap.get(i)[0]+")\n" + 
+        "@Path(\""+pcoMap.get(i)[0]+"\")\n" + 
         produces+
         consumes+
-        "public Response "+pcoMap.get(i)[2]+"(@PathParam(ID_PAGE) Integer id, final PageDto pageRepresentation) {\n" + 
+        "public Response "+pcoMap.get(i)[2]+"("+auxConstructor+") {\n" + 
         "\n" + 
-        "return delegate.updatePage(id, pageRepresentation);\n" + 
+        "return delegate."+pcoMap.get(i)[2]+"("+auxReturn+");\n" + 
         "}\n\n";
     
   

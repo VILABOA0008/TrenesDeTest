@@ -28,7 +28,7 @@ public class Leer {
     FileReader fr = new FileReader(
         "C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\PageApi.java");
     String oldMethod="";  String newMethod="";
-    String oldPath="",newPath="";
+    String oldPath="",newPath="/account";
     boolean show = true;//para el principio
     int c = 0;
     int cc=-1;
@@ -48,6 +48,9 @@ public class Leer {
           }
         } else {
             cons+=a;
+            if(a.contains(  "'/bom/{idBom}'")) {
+              System.out.println("dsa" ); 
+            }
             if (a.contains("  /")||a.contains(" '/")) {
               if(!a.contains(clase)) {
                 oldPath=newPath;
@@ -57,19 +60,22 @@ public class Leer {
               }else {
                 oldPath=newPath;
                 newPath=a;
-              
+                
               }}else
             if(a.contains("definitions:")) {
               oldMethod=newMethod;
               oldMethod=oldMethod.replace(":", "");
-          cc=inside(cc,cons,oldPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
+              
+//          cc=inside(cc,cons,oldPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
           System.out.println(cons+"\n\n FINNNNNNNNNNNNNNN\n\n\n"+c);
           Leer2.processing(clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
 
             }
             else if((a.contains("get:")||a.contains("post:")||a.contains("put:")||a.contains("delete:"))&&cons.length()>40) {
               oldMethod=newMethod;
+              oldPath=newPath;
               newMethod=a.replace(" ", "");
+              if(oldMethod=="") {oldMethod=newMethod;}
               oldMethod=oldMethod.replace(":", "");
           cc=inside(cc,cons,oldPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
           c++; a=""; cons=a;
@@ -158,7 +164,7 @@ public class Leer {
     System.out.println("Response Type: "+responseType ); 
     if(refResponse!=null) {System.out.println("$ref  "+refResponse ); }
     System.out.println("\n\n" ); 
-    clase=clase.replace(":", "").replace("\r", "");
+    clase=clase.replace(":", "").replace("\r", "").replace("'", "");
     Integer map=clasMap.get(stag);
     if(map == null) {
       cc++;
