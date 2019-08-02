@@ -18,8 +18,6 @@
         '200':
           description: successful operation
           schema:
-             
-          
             $ref: '#/definitions/Account'
     post:
       tags:
@@ -167,37 +165,7 @@
           description: successful operation
           schema:
             $ref: '#/definitions/Bom'
-  /bom/extended:
-    get:
-      tags:
-        - bom
-      summary: ''
-      description: ''
-      operationId: getAllBomsExtended
-      produces:
-        - application/json
-      parameters:
-        - name: idPart
-          in: query
-          required: false
-          type: integer
-          format: int32
-        - name: idClient
-          in: query
-          required: false
-          type: integer
-          format: int32
-        - name: partText
-          in: query
-          required: false
-          type: string
-      responses:
-        '200':
-          description: successful operation
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Bom'
+
   '/bom/{idBom}':
     get:
       tags:

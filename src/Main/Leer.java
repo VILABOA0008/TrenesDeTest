@@ -55,6 +55,7 @@ public class Leer {
               if(!a.contains(clase)) {
                 oldPath=newPath;
                 newPath=a;
+                if(oldPath==null) {oldPath=newPath;}
                 a=a.substring(2);
                 clase=oldPath.split(":")[0];
               }else {
@@ -66,14 +67,13 @@ public class Leer {
               oldMethod=newMethod;
               oldMethod=oldMethod.replace(":", "");
               
-//          cc=inside(cc,cons,oldPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
+          cc=inside(cc,cons,oldPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
           System.out.println(cons+"\n\n FINNNNNNNNNNNNNNN\n\n\n"+c);
           Leer2.processing(clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
 
             }
             else if((a.contains("get:")||a.contains("post:")||a.contains("put:")||a.contains("delete:"))&&cons.length()>40) {
               oldMethod=newMethod;
-              oldPath=newPath;
               newMethod=a.replace(" ", "");
               if(oldMethod=="") {oldMethod=newMethod;}
               oldMethod=oldMethod.replace(":", "");

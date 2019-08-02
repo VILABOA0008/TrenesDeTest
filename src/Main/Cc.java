@@ -20,10 +20,10 @@ public class Cc {
       String auxReturn="";
 if(!nameMap.get(i).isEmpty()) {
       for(int j=0;j<nameMap.get(i).size();j++) {
-        auxReturn=nameMap.get(i).get(j)+",";
+        auxReturn+=nameMap.get(i).get(j)+",";
         String in;
         if(inMap.get(i).get(j).equalsIgnoreCase("query")) {in="@QueryParam()";}else {in="@PathParam()";}
-        auxConstructor= in+typeMapping.get(typeMap.get(i).get(j))+" "+nameMap.get(i).get(j)+",";
+        auxConstructor+= in+typeMapping.get(typeMap.get(i).get(j))+" "+nameMap.get(i).get(j)+",";
         
       }
       auxReturn=auxReturn.substring(0,auxReturn.length()-1);
