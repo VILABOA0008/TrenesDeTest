@@ -8,7 +8,8 @@ public class Escribir {
 
   public static void escribir(String ruta, String texto) {
 
-    ruta="C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\test.java";
+//    ruta="C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\test.java";
+    
     File archivo = new File(ruta);
     //       if(!archivo.exists()){
     try {
