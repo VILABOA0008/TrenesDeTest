@@ -18,11 +18,18 @@ public class Leer2 {
 
     clasMap.forEach((k, v) -> System.out.println("Item : " + k + " Count : " + v));
     String clas = "Account";
-
+    ArrayList<String>clases=new ArrayList<>();
+    
     Map<String, String> typeMapping = new HashMap<String, String>();
     cosas.typeMapping(typeMapping, typeMap);
     for (Entry<Integer, ArrayList<ArrayList<String>>> entry : typeMap.entrySet()) {
       System.out.println("Item : " + entry.getKey() + " Count : " + entry.getValue());
+    }
+    for(int i=0;i<clasMap.size();i++) {
+      clases.add(null);
+    }
+    for (Entry<String, Integer> entry : clasMap.entrySet()) {
+      clases.set(entry.getValue(), entry.getKey());
     }
     String api = "", apiService = "";
     for (int c = 0; c < clasMap.size(); c++) {
@@ -38,7 +45,7 @@ public class Leer2 {
               typeMapping);
       apiService +=
           ApiService.Methods(
-              clas, nameMap.get(c), inMap.get(c), typeMap.get(c), pcoMap.get(c), typeMapping);
+              clases.get(c), nameMap.get(c), inMap.get(c), typeMap.get(c), pcoMap.get(c), typeMapping);
 //      Escribir.escribir("C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\Api.java", api);
 //      Escribir.escribir("C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\ApiService.java", apiService);
     }

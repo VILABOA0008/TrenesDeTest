@@ -28,7 +28,7 @@ public class Leer {
     FileReader fr = new FileReader(
         "C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\PageApi.java");
     String oldMethod="";  String newMethod="";
-    String oldPath="",newPath="/account";
+    String oldPath="",newPath="/report";
     boolean show = true;//para el principio
     int c = 0;
     int cc=-1;
@@ -67,7 +67,7 @@ public class Leer {
               oldMethod=newMethod;
               oldMethod=oldMethod.replace(":", "");
               
-          cc=inside(cc,cons,oldPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
+          cc=inside(cc,cons,newPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
           System.out.println(cons+"\n\n FINNNNNNNNNNNNNNN\n\n\n"+c);
           Leer2.processing(clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
 
