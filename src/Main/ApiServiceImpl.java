@@ -3,7 +3,11 @@ package Main;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class ApiService {
+import javax.ws.rs.core.Response;
+
+import com.ctag.paperless.psa.totem.dto.document.DocumentDto;
+
+public class ApiServiceImpl {
 
   public static String Methods(
       String clas,
@@ -12,7 +16,7 @@ public class ApiService {
       ArrayList<ArrayList<String>> typeMap,
       ArrayList<String[]> pcoMap,
       Map<String, String> typeMapping) {
-    String apiService = "\n\n  public abstract class " + clas + " {\n\n";
+    String apiServiceImpl = "\n\n  public abstract class " + clas + " {\n\n";
     for (int i = 0; i < inMap.size(); i++) {
       String auxConstructor = "";
       if (!nameMap.get(i).isEmpty()) {
@@ -24,12 +28,15 @@ public class ApiService {
         auxConstructor = auxConstructor.substring(0, auxConstructor.length() - 1);
       }
 
-      apiService +=
-          "public abstract Response " + pcoMap.get(i)[2] + "(" + auxConstructor + ");\n\n";
+      apiServiceImpl +=
+          "\n@Override\npublic Response " + pcoMap.get(i)[2] + "(" + auxConstructor + ");\n\n"
+              + "    return Response.ok().entity(\"\").build();\n" + 
+              "  }\n" + 
+              "";
     }
 
-    apiService += "\n}\n";
+    apiServiceImpl += "\n}\n";
 
-    return apiService;
+    return apiServiceImpl;
   }
 }

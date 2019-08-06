@@ -15,7 +15,7 @@ public class Leer2 {
       Map<Integer, ArrayList<Boolean>> consumesMap,
       Map<Integer, ArrayList<Boolean>> producesMap,
       Map<Integer, ArrayList<String[]>> pcoMap) {
-
+    String auxclass="";
     clasMap.forEach((k, v) -> System.out.println("Item : " + k + " Count : " + v));
     String clas = "Account";
     ArrayList<String>clases=new ArrayList<>();
@@ -31,11 +31,11 @@ public class Leer2 {
     for (Entry<String, Integer> entry : clasMap.entrySet()) {
       clases.set(entry.getValue(), entry.getKey());
     }
-    String api = "", apiService = "";
+    String api = "", apiService = "",apiServiceImpl = "";
     for (int c = 0; c < clasMap.size(); c++) {
       api +=
           Api.httpMethod(
-              clas,
+              clases.get(c),
               nameMap.get(c),
               inMap.get(c),
               typeMap.get(c),
@@ -46,10 +46,14 @@ public class Leer2 {
       apiService +=
           ApiService.Methods(
               clases.get(c), nameMap.get(c), inMap.get(c), typeMap.get(c), pcoMap.get(c), typeMapping);
+      apiServiceImpl +=
+      ApiServiceImpl.Methods(
+          clases.get(c), nameMap.get(c), inMap.get(c), typeMap.get(c), pcoMap.get(c), typeMapping);
 //      Escribir.escribir("C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\Api.java", api);
 //      Escribir.escribir("C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\ApiService.java", apiService);
     }
     Escribir.escribir("C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\TApi.java", api);
     Escribir.escribir("C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\TApiService.java", apiService);
+    Escribir.escribir("C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\TApiServiceImpl.java", apiServiceImpl);
   }
 }
