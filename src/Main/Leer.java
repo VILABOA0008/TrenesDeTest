@@ -26,9 +26,9 @@ public class Leer {
     String cons="";
     // pass the path to the file as a parameter
     FileReader fr = new FileReader(
-        "C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\PageApi.java");
+        "C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\PageApi2.java");
     String oldMethod="";  String newMethod="";
-    String oldPath="",newPath="/report";
+    String oldPath="",newPath=null;
     boolean show = true;//para el principio
     int c = 0;
     int cc=-1;
@@ -53,17 +53,16 @@ public class Leer {
             }
             if (a.contains("  /")||a.contains(" '/")) {
               if(!a.contains(clase)) {
-                oldPath=newPath;
+
                 newPath=a;
-                if(oldPath==null) {oldPath=newPath;}
                 a=a.substring(2);
                 clase=oldPath.split(":")[0];
               }else {
-                oldPath=newPath;
+                if(newPath==null) {newPath=a;oldPath=newPath;}
                 newPath=a;
                 
               }}else
-            if(a.contains("definitions:")) {
+            if(a.contains("definitions:")||a.contains("components:")) {
               oldMethod=newMethod;
               oldMethod=oldMethod.replace(":", "");
               
@@ -78,6 +77,7 @@ public class Leer {
               if(oldMethod=="") {oldMethod=newMethod;}
               oldMethod=oldMethod.replace(":", "");
           cc=inside(cc,cons,oldPath,oldMethod,clasMap,nameMap,inMap,typeMap,consumesMap,producesMap,pcoMap);
+          oldPath=newPath;
           c++; a=""; cons=a;
           }
             a = "";

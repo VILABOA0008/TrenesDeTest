@@ -22,8 +22,9 @@ if(!nameMap.get(i).isEmpty()) {
       for(int j=0;j<nameMap.get(i).size();j++) {
         auxReturn+=nameMap.get(i).get(j)+",";
         String in;
-        if(inMap.get(i).get(j).equalsIgnoreCase("query")) {in="@QueryParam()";}else if(inMap.get(i).get(j).equalsIgnoreCase("query")){in="@PathParam()";}else {
-          in="@PathParam()";
+        if(inMap.get(i).get(j).equalsIgnoreCase("query")) {in="@QueryParam()";}else if(inMap.get(i).get(j).equalsIgnoreCase("path")){
+          in="@PathParam(\""+nameMap.get(i).get(j)+"\")";}else {
+          in="    ";
         }
         auxConstructor+= in+typeMapping.get(typeMap.get(i).get(j))+" "+nameMap.get(i).get(j)+",";
         
