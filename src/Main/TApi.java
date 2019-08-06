@@ -7,42 +7,42 @@ return delegate.createButton();
 
 @PUT
 @Path("/button")
-public Response addDocument(@QueryParam()Integer idButton,@QueryParam()Integer idDocument) {
+public Response addDocument(@QueryParam("idButton") Integer idButton,@QueryParam("idDocument") Integer idDocument) {
 
 return delegate.addDocument(idButton,idDocument);
 }
 
 @GET
 @Path("/button")
-public Response getActiveButtons(@QueryParam()Integer idPage,@QueryParam()Boolean active) {
+public Response getActiveButtons(@QueryParam("idPage") Integer idPage,@QueryParam("active") Boolean active) {
 
 return delegate.getActiveButtons(idPage,active);
 }
 
 @GET
 @Path("/button/Document")
-public Response getDocumentByButton(@QueryParam()Integer idButton) {
+public Response getDocumentByButton(@QueryParam("idButton") Integer idButton) {
 
 return delegate.getDocumentByButton(idButton);
 }
 
 @GET
 @Path("/button/{idButton}")
-public Response getButtonByID(@PathParam("idButton")Integer idButton) {
+public Response getButtonByID(@PathParam("idButton") Integer idButton) {
 
 return delegate.getButtonByID(idButton);
 }
 
 @PUT
 @Path("/button/{idButton}")
-public Response ModifyButton(@PathParam("idButton")Integer idButton) {
+public Response ModifyButton(@PathParam("idButton") Integer idButton) {
 
 return delegate.ModifyButton(idButton);
 }
 
 @DELETE
 @Path("/button/{idButton}")
-public Response deleteButtonByID(@PathParam("idButton")Integer idButton) {
+public Response deleteButtonByID(@PathParam("idButton") Integer idButton) {
 
 return delegate.deleteButtonByID(idButton);
 }
@@ -63,35 +63,35 @@ return delegate.getAllPages();
 
 @GET
 @Path("/page/{idPage}")
-public Response getPageById(@PathParam("idPage")Integer idPage) {
+public Response getPageById(@PathParam("idPage") Integer idPage) {
 
 return delegate.getPageById(idPage);
 }
 
 @PUT
 @Path("/page/{idPage}")
-public Response (@PathParam("idPage")Integer idPage) {
+public Response (@PathParam("idPage") Integer idPage) {
 
 return delegate.(idPage);
 }
 
 @GET
 @Path("/page/buttons/{idPage}")
-public Response getPageButtons(@PathParam("idPage")Integer idPage) {
+public Response getPageButtons(@PathParam("idPage") Integer idPage) {
 
 return delegate.getPageButtons(idPage);
 }
 
 @GET
 @Path("/document/{idDocument}")
-public Response getDocumentById(@PathParam("idDocument")Integer idDocument) {
+public Response getDocumentById(@PathParam("idDocument") Integer idDocument) {
 
 return delegate.getDocumentById(idDocument);
 }
 
 @PUT
 @Path("/document/{idDocument}")
-public Response ModifyDocument(@PathParam("idDocument")Integer idDocument) {
+public Response ModifyDocument(@PathParam("idDocument") Integer idDocument) {
 
 return delegate.ModifyDocument(idDocument);
 }
@@ -112,28 +112,28 @@ return delegate.createDocument();
 
 @PUT
 @Path("/document")
-public Response addButton(@QueryParam()Integer idDocument,@QueryParam()Integer idButton) {
+public Response addButton(@QueryParam("idDocument") Integer idDocument,@QueryParam("idButton") Integer idButton) {
 
 return delegate.addButton(idDocument,idButton);
 }
 
 @GET
 @Path("/document/repo")
-public Response test(@QueryParam()String url) {
+public Response test(@QueryParam("url") String url) {
 
 return delegate.test(url);
 }
 
 @POST
 @Path("/document/repo")
-public Response UploadFile(@QueryParam()Object name) {
+public Response UploadFile(@QueryParam("name") Object name) {
 
 return delegate.UploadFile(name);
 }
 
 @DELETE
 @Path("/document/repo")
-public Response DeleteNode(@QueryParam()String node) {
+public Response DeleteNode(@QueryParam("node") String node) {
 
 return delegate.DeleteNode(node);
 }
@@ -147,7 +147,7 @@ return delegate.Refreshacopy();
 
 @PUT
 @Path("/document/reset")
-public Response resetPicture(@QueryParam()String link) {
+public Response resetPicture(@QueryParam("link") String link) {
 
 return delegate.resetPicture(link);
 }
@@ -161,7 +161,7 @@ return delegate.getAllLines();
 
 @GET
 @Path("/line/{idLine}")
-public Response getLineById(@PathParam("idLine")Integer idLine) {
+public Response getLineById(@PathParam("idLine") Integer idLine) {
 
 return delegate.getLineById(idLine);
 }
