@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Leer {
-
+int test=0;
   public static void Leer()
       throws IOException {
     Integer cmetodos=0;
