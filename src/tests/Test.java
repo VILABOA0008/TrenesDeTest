@@ -4,9 +4,10 @@ import java.io.File;
 
 public class Test {
 
-  public static String tests(String s) {
-    
-    File a=new File("C:\\GIT\\paperless\\quality\\quality-specs\\src\\main\\java\\com\\ctag\\paperless\\quality\\domain\\model");
+  public static void main(String[] args) throws Exception {
+    String s; 
+    String url="C:\\GIT\\PSA\\Totem\\backend\\totem-specs\\src\\main\\java\\com\\ctag\\paperless\\psa\\totem\\domain\\model";
+    File a=new File(url);
    for (File i : a.listFiles()) {   
       for (File q : i.listFiles()) {   
         if(q.getName().contains("Id")) {
@@ -19,14 +20,13 @@ public class Test {
     
     String test="";
     
-//    buscar();
-    return test;
+    buscar(url);
   }
   
-  public static void buscar() {
+  public static void buscar(String url) {
     
     
-    File a=new File("C:\\GIT\\paperless\\quality\\quality-specs\\src\\main\\java\\com\\ctag\\paperless\\quality\\domain\\model");
+    File a=new File(url);
    for (File i : a.listFiles()) {   
     System.err.println("\n\n");
     

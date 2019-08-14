@@ -1,4 +1,4 @@
-package tests;
+package com.ctag.paperless.core.domain.model.AaTEEST.escribir;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,11 +8,13 @@ public class Escribir2 {
 
   public static void escribir(String ruta, String texto,String clase) {
 
-//    ruta="C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\testsss";
-    System.err.println(ruta);
+//    ruta="C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\Main\\test.java";
+    ruta="C:\\GIT\\paperless\\quality\\quality-specs\\src\\test\\java\\ut\\com\\ctag\\paperless\\quality\\domain\\model\\"+ruta;
     File archivo = new File(ruta);
-    archivo.mkdir();
-    archivo=new File(archivo.getPath()+"\\"+clase+".java");
+//    archivo.mkdir();
+    System.err.println(archivo.getPath());
+    System.err.println(archivo.list()[0]);
+    archivo=new File(archivo.getPath()+"\\"+clase+"UnitTest.java");
     //       if(!archivo.exists()){
     try {
       FileWriter aWriter = new FileWriter(archivo, false);
