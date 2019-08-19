@@ -1,3 +1,6 @@
+package plantillas;
+import Main.Api;
+
 public class TApi {
 
 @JpaUnit

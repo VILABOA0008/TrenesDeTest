@@ -1,3 +1,4 @@
+package plantillas;
 
   /report:
     get:
