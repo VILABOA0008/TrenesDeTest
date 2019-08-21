@@ -95,7 +95,7 @@ public class Agregador {
         "        .verify();\r\n" +
         "  \n}";
 
-  }
+  
 
     String Sets = "";
     for (int i = 0; i < sets.size(); i++) {
