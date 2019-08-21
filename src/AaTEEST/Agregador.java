@@ -1,13 +1,12 @@
-package AaTEEST;
+package com.ctag.paperless.core.domain.model.AaTEEST;
 
 import java.util.ArrayList;
-
-import AaTEEST.escribir.Escribir2;
+import com.ctag.paperless.core.domain.model.AaTEEST.escribir.Escribir2;
 
 public class Agregador {
 
   public static void clase(String url, String clase, ArrayList<String> conId,
-      ArrayList<String> sinId, ArrayList<String> sets) {
+      ArrayList<String> sinId, ArrayList<String> sets, ArrayList<String> setsType) {
     // String urlSpecs="import com.ctag.paperless.core.domain.model.unit.";
     // String paquetes=urlSpecs+clase;
 
@@ -74,7 +73,7 @@ public class Agregador {
         String clas = conId.get(i).substring(0, 1).toUpperCase() + conId.get(i).substring(1);
         clases += "\n\n"
             + "  @Test\r\n" +
-            "  public void testGet" + conId.get(i) + "() {\r\n" +
+            "  public void testGet" + clas+ "() {\r\n" +
             "    underTest.set" + clas + "(new " + clas + "(TEST_INTEGER));\r\n" +
             "    assertThat(underTest.get" + clas
             + "().getId()).isNotNull().isEqualTo(TEST_INTEGER);\r\n" +
@@ -100,16 +99,47 @@ public class Agregador {
           "  \n}";
 
     }
+    
+    String Sets ="";
+    for (int i = 0; i < sets.size(); i++) {
+      String auxSet= sets.get(i).substring(0, 1).toUpperCase() + sets.get(i).substring(1);
+      clases += "\n\n"
+          + "    @Test\r\n" + 
+          "    @SuppressWarnings(\"unchecked\")\r\n" + 
+          "    public void testGet"+auxSet+"() throws Exception {\r\n" + 
+          "      Set<"+setsType.get(i)+"> mockedSet = mock(Set.class);\r\n" + 
+          "      when(mockedSet.size()).thenReturn(TEST_INTEGER);\r\n" + 
+          "      testSet"+auxSet+"(mockedSet);\r\n" + 
+          "      assertThat(underTest.get"+auxSet+"().size()).isEqualTo(TEST_INTEGER);\r\n" + 
+          "    }\r\n" + 
+          "   \r\n" + 
+          "    @Test\r\n" + 
+          "    public void testIs"+auxSet+"Empty() {\r\n" + 
+          "      assertThat(underTest.get"+auxSet+"()).isEmpty();\r\n" + 
+          "    }\r\n" + 
+          "   \r\n" + 
+          "   \r\n" + 
+          "    private void testSet"+auxSet+"(Set<"+setsType.get(i)+">"+sets.get(i)+") throws Exception {\r\n" + 
+          "      Field "+sets.get(i)+"Field = "+clase+".class.getDeclaredField(\""+sets.get(i)+"\");\r\n" + 
+          "      "+sets.get(i)+"Field.setAccessible(true);\r\n" + 
+          "      "+sets.get(i)+"Field.set(underTest, "+sets.get(i)+");\r\n" + 
+          "      "+sets.get(i)+"Field.setAccessible(false);\r\n" + 
+          "    }\r\n" + 
+          "    ";
 
-    System.err.println("sadsa");
+    }
+    
 
+
+//    System.err.println("sadsa");
+    r+=Sets+"\n";
     r += clases + "\n";
     r += equals + "\n";
     r += "}";
 
     url = url.split("\\.")[url.split("\\.").length - 1];
-    System.err.println(url);
-
+//    System.err.println(url);
+    
     Escribir2.escribir(url, r, clase);
   }
 
@@ -183,6 +213,6 @@ public class Agregador {
       }
     }
 
-    Escribir2.escribir(url, r, clase);
+//    Escribir2.escribir(url, r, clase);
   }
 }
