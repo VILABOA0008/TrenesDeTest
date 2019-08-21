@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public class Agregador {
 
   public static void clase(String url, String clase, ArrayList<String> conId,
-      ArrayList<String> sinId, ArrayList<String> sets,ArrayList<String> setsType,
-      ArrayList<String> toString, ArrayList<String> toStringTypes,
+      ArrayList<String> sinId, ArrayList<String> sets, ArrayList<String> setsType,
       ArrayList<String> vars, ArrayList<String> varTypes) {
     // String urlSpecs="import com.ctag.paperless.core.domain.model.unit.";
     // String paquetes=urlSpecs+clase;
@@ -95,8 +94,6 @@ public class Agregador {
         "        .verify();\r\n" +
         "  \n}";
 
-  
-
     String Sets = "";
     for (int i = 0; i < sets.size(); i++) {
       String auxSet = sets.get(i).substring(0, 1).toUpperCase() + sets.get(i).substring(1);
@@ -134,9 +131,9 @@ public class Agregador {
 
     r += Sets + "\n";
     r += Agregador.Simplevars(url, clase, vars, varTypes);
-    // Agregador.toString(url, clase, toString,toStringTypes);
 
     r += equals + "\n";
+    r += toString(url, clase, vars, varTypes);
     r += "}";
 
     url = url.split("\\.")[url.split("\\.").length - 1];
@@ -177,44 +174,43 @@ public class Agregador {
 
   }
 
-  public static void toString(String url, String clase, ArrayList<String> toString,
-      ArrayList<String> toStringTypes) {
+  public static String toString(String url, String clase, ArrayList<String> vars,
+      ArrayList<String> varsTypes) {
     System.err.println("\n ATRIBUTOS");
-    toString.forEach(n -> System.err.println(n));
+    vars.forEach(n -> System.err.println(n + "  " + clase));
     System.err.println("FIN");
 
     String r = "  @Test\r\n" +
-        "  public void testToString() throws Exception {\n\n";
-    for (int i = 0; i < toString.size(); i++) {
-      String name = toString.get(i);
-      String type = toStringTypes.get(i);
+        "  public void testToString() throws Exception {\n\n"
+        + "    FieldSetter.setField(underTest, " + clase + ".class.getDeclaredField(\"id\"), 1);\n";
+    for (int i = 0; i < vars.size(); i++) {
+      String name = vars.get(i).substring(0, 1).toUpperCase() + vars.get(i).substring(1);
+      String type = varsTypes.get(i);
 
-      if (type.contains("Id")) {
-        r += "   " + type + " " + name + " = new " + type + "(TEST_INTEGER);\n";
-
-      } else {
-
-        r += "   underTest.set" + name.substring(0, 1).toUpperCase() + name.substring(1) + "(TEST_"
-            + type.toUpperCase() + ");\n";
-      }
-    }
-    r += "   assertThat(underTest.toString())\n"
-        + "        .isEqualTo(";
-
-    for (int i = 0; i < toString.size(); i++) {
-      String name = toString.get(i);
-      String type = toStringTypes.get(i);
-
-      if (type.contains("Id")) {
-        r += "   " + type + " " + name + " = new " + type + "(TEST_INTEGER);\n";
-
-      } else {
-
-        r += "   underTest.set" + name.substring(0, 1).toUpperCase() + name.substring(1) + "(TEST_"
-            + type.toUpperCase() + ");\n";
-      }
+      r += "    underTest.set" + name;
+      if(type.equalsIgnoreCase("String")) {r+="(\"test" + name + "\");\n";}else if(type.equalsIgnoreCase("Boolean")){ 
+        r+="("+true+");\n";}else if(type.equalsIgnoreCase("Integer")){ 
+          r+="("+1+");\n";
+        }
+      
     }
 
-    Escribir2.escribir(url, r, clase);
+    r += "    assertThat(underTest.toString()).isEqualTo(\r\n" +
+        "        new ToStringBuilder(underTest)\n"
+        + "        .append(\"id\", 1)\n";
+
+    for (int i = 0; i < vars.size(); i++) {
+      String name = vars.get(i).substring(0, 1).toUpperCase() + vars.get(i).substring(1);
+      String type = varsTypes.get(i);
+      
+      r += "            .append(\"" + vars.get(i) + "\", ";
+      
+      if(type.equalsIgnoreCase("String")) {r+= "\"test" + name + "\")\n";}else if(type.equalsIgnoreCase("Boolean")){ 
+        r+=true+")\n";}else if(type.equalsIgnoreCase("Integer")){ 
+          r+=1+")\n";}
+      
+    }
+    r += "            .toString());\n}\n";
+    return r;
   }
 }

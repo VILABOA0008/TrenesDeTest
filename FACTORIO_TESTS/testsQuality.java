@@ -63,15 +63,18 @@ public class testsQuality {
           // sets
         } else if (leer.getDeclaredFields()[i].getType().getModifiers() == 1537) {
           sets.add(leer.getDeclaredFields()[i].getName());
-          String type=leer.getDeclaredFields()[i].getGenericType().getTypeName().split("\\.")[leer.getDeclaredFields()[i].getGenericType().getTypeName().split("\\.").length-1];
-          type=type.replace(">", "");
+          String type = leer.getDeclaredFields()[i].getGenericType().getTypeName().split(
+              "\\.")[leer.getDeclaredFields()[i].getGenericType().getTypeName().split("\\.").length
+                  - 1];
+          type = type.replace(">", "");
           setsType.add(type);
           // System.err.println(leer.getDeclaredFields()[i].getType().getModifiers()+"
           // "+leer.getDeclaredFields()[i].getType()+" "+leer.getDeclaredFields()[i].getName());
         }
       }
     }
-    Agregador.clase(url, clase, conId, sinId, sets,setsType, toString, toStringTypes, vars, varsTypes);
+    Agregador.clase(url, clase, conId, sinId, sets, setsType, vars,
+        varsTypes);
 
   }
 
