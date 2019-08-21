@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Agregador {
 
   public static void clase(String url, String clase, ArrayList<String> conId,
-      ArrayList<String> sinId, ArrayList<String> sets,
+      ArrayList<String> sinId, ArrayList<String> sets,ArrayList<String> setsType,
       ArrayList<String> toString, ArrayList<String> toStringTypes,
       ArrayList<String> vars, ArrayList<String> varTypes) {
     // String urlSpecs="import com.ctag.paperless.core.domain.model.unit.";
@@ -53,55 +53,88 @@ public class Agregador {
     String clases = "";
     String equals = "";
 
+    equals = "  \n @Test\r\n" +
+        "    public void testEquals() throws Exception {\r\n";
 
-      equals = "  \n @Test\r\n" +
-          "    public void testEquals() throws Exception {\r\n";
+    for (int i = 0; i < sinId.size(); i++) {
+      String clas = sinId.get(i).substring(0, 1).toUpperCase() + sinId.get(i).substring(1);
+      clases += "\n\n"
+          + "  @Test\r\n" +
+          "  public void testGet" + clas + "() {\r\n" +
+          "    assertThat(underTest.get" + clas + "()).isNull();\r\n" +
+          "  }";
 
-      for (int i = 0; i < sinId.size(); i++) {
-        String clas = sinId.get(i).substring(0, 1).toUpperCase() + sinId.get(i).substring(1);
-        clases += "\n\n"
-            + "  @Test\r\n" +
-            "  public void testGet" + clas + "() {\r\n" +
-            "    assertThat(underTest.get" + clas + "()).isNull();\r\n" +
-            "  }";
+    }
 
-      }
+    for (int i = 0; i < conId.size(); i++) {
+      String clas = conId.get(i).substring(0, 1).toUpperCase() + conId.get(i).substring(1);
+      clases += "\n\n"
+          + "  @Test\r\n" +
+          "  public void testGet" + conId.get(i) + "() {\r\n" +
+          "    underTest.set" + clas + "(new " + clas + "(TEST_INTEGER));\r\n" +
+          "    assertThat(underTest.get" + clas
+          + "().getId()).isNotNull().isEqualTo(TEST_INTEGER);\r\n" +
+          "  }";
 
-      for (int i = 0; i < conId.size(); i++) {
-        String clas = conId.get(i).substring(0, 1).toUpperCase() + conId.get(i).substring(1);
-        clases += "\n\n"
-            + "  @Test\r\n" +
-            "  public void testGet" + conId.get(i) + "() {\r\n" +
-            "    underTest.set" + clas + "(new " + clas + "(TEST_INTEGER));\r\n" +
-            "    assertThat(underTest.get" + clas
-            + "().getId()).isNotNull().isEqualTo(TEST_INTEGER);\r\n" +
-            "  }";
+    }
 
-      }
+    equals += "EqualsVerifier.forClass(" + clase + ".class)\n";
+    for (int i = 0; i < sinId.size(); i++) {
+      String clas = sinId.get(i).substring(0, 1).toUpperCase() + sinId.get(i).substring(1);
+      equals += ".withPrefabValues(" + clas + ".class, mock(" + clas + ".class), mock(" + clas
+          + ".class))\n";
+    }
 
-      equals += "EqualsVerifier.forClass(" + clase + ".class)\n";
-      for (int i = 0; i < conId.size(); i++) {
-        String clas = conId.get(i).substring(0, 1).toUpperCase() + conId.get(i).substring(1);
-        equals += ".withPrefabValues(" + clas + ".class, mock(" + clas + ".class), mock(" + clas
-            + ".class))\n";
-      }
+    if (!sets.isEmpty()) {
+      equals += ".withPrefabValues(Set.class, mock(Set.class),mock(Set.class))\n";
+    }
 
-      if (!sets.isEmpty()) {
-        equals += ".withPrefabValues(Set.class, mock(Set.class),mock(Set.class))\n";
-      }
+    equals += "        .usingGetClass()\r\n" +
+        "        .suppress(Warning.SURROGATE_KEY)\r\n" +
+        "        .withRedefinedSuperclass()\r\n" +
+        "        .verify();\r\n" +
+        "  \n}";
 
-      equals += "        .usingGetClass()\r\n" +        
-          "        .suppress(Warning.ALL_FIELDS_SHOULD_BE_USED)\r\n" +
-          "        .withRedefinedSuperclass()\r\n" +
-          "        .verify();\r\n" +
-          "  \n}";
+  }
 
-    
+    String Sets = "";
+    for (int i = 0; i < sets.size(); i++) {
+      String auxSet = sets.get(i).substring(0, 1).toUpperCase() + sets.get(i).substring(1);
+      clases += "\n\n"
+          + "    @Test\r\n" +
+          "    @SuppressWarnings(\"unchecked\")\r\n" +
+          "    public void testGet" + auxSet + "() throws Exception {\r\n" +
+          "      Set<" + setsType.get(i) + "> mockedSet = mock(Set.class);\r\n" +
+          "      when(mockedSet.size()).thenReturn(TEST_INTEGER);\r\n" +
+          "      testSet" + auxSet + "(mockedSet);\r\n" +
+          "      assertThat(underTest.get" + auxSet + "().size()).isEqualTo(TEST_INTEGER);\r\n" +
+          "    }\r\n" +
+          "   \r\n" +
+          "    @Test\r\n" +
+          "    public void testIs" + auxSet + "Empty() {\r\n" +
+          "      assertThat(underTest.get" + auxSet + "()).isEmpty();\r\n" +
+          "    }\r\n" +
+          "   \r\n" +
+          "   \r\n" +
+          "    private void testSet" + auxSet + "(Set<" + setsType.get(i) + ">" + sets.get(i)
+          + ") throws Exception {\r\n" +
+          "      Field " + sets.get(i) + "Field = " + clase + ".class.getDeclaredField(\""
+          + sets.get(i) + "\");\r\n" +
+          "      " + sets.get(i) + "Field.setAccessible(true);\r\n" +
+          "      " + sets.get(i) + "Field.set(underTest, " + sets.get(i) + ");\r\n" +
+          "      " + sets.get(i) + "Field.setAccessible(false);\r\n" +
+          "    }\r\n" +
+          "    ";
+
+    }
+
+    // System.err.println("sadsa");
 
     r += clases + "\n";
 
-  r+=Agregador.Simplevars(url, clase, vars, varTypes);
-//   Agregador.toString(url, clase, toString,toStringTypes);
+    r += Sets + "\n";
+    r += Agregador.Simplevars(url, clase, vars, varTypes);
+    // Agregador.toString(url, clase, toString,toStringTypes);
 
     r += equals + "\n";
     r += "}";
@@ -122,20 +155,21 @@ public class Agregador {
       String type = varsTypes.get(i);
 
       System.err.println(type + "  " + var);
-      if(type.equalsIgnoreCase("Boolean")) {
+      if (type.equalsIgnoreCase("Boolean")) {
         r += "  @Test\r\n" +
             "  public void testIs" + var + "() throws Exception {\r\n" +
             "    underTest.set" + var + "(true);\r\n" +
             "    assertThat(underTest.is" + var + "()).isNotNull().isEqualTo(true);\r\n" +
             "  }\n";
-      }else {
-      
-      r += "  @Test\r\n" +
-          "  public void testGet" + var + "() throws Exception {\r\n" +
-          "    underTest.set" + var + "(TEST_" + type.toUpperCase() + ");\r\n" +
-          "    assertThat(underTest.get" + var + "()).isNotNull().isEqualTo(TEST_"
-          + type.toUpperCase() + ");\r\n" +
-          "  }\n";}
+      } else {
+
+        r += "  @Test\r\n" +
+            "  public void testGet" + var + "() throws Exception {\r\n" +
+            "    underTest.set" + var + "(TEST_" + type.toUpperCase() + ");\r\n" +
+            "    assertThat(underTest.get" + var + "()).isNotNull().isEqualTo(TEST_"
+            + type.toUpperCase() + ");\r\n" +
+            "  }\n";
+      }
 
     }
     System.err.println("FIN");

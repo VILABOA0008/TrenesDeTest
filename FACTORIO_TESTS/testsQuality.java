@@ -17,6 +17,7 @@ public class testsQuality {
     ArrayList<String> conId = new ArrayList<>();
     ArrayList<String> sinId = new ArrayList<>();
     ArrayList<String> sets = new ArrayList<>();
+    ArrayList<String> setsType = new ArrayList<>();
     ArrayList<String> toString = new ArrayList<>();
     ArrayList<String> toStringTypes = new ArrayList<>();
     ArrayList<String> vars = new ArrayList<>();
@@ -26,7 +27,7 @@ public class testsQuality {
     Class leer = Class.forName(url + "." + clase);
     for (int i = 0; i < leer.getDeclaredFields().length; i++) {
       // remove Static Strings
-      
+
       System.err.println(leer.getDeclaredFields()[i].getName() + "  "
           + leer.getDeclaredFields()[i].getType().getModifiers() + "  " +
           leer.getDeclaredFields()[i].getType().getSimpleName());
@@ -62,14 +63,15 @@ public class testsQuality {
           // sets
         } else if (leer.getDeclaredFields()[i].getType().getModifiers() == 1537) {
           sets.add(leer.getDeclaredFields()[i].getName());
-
+          String type=leer.getDeclaredFields()[i].getGenericType().getTypeName().split("\\.")[leer.getDeclaredFields()[i].getGenericType().getTypeName().split("\\.").length-1];
+          type=type.replace(">", "");
+          setsType.add(type);
           // System.err.println(leer.getDeclaredFields()[i].getType().getModifiers()+"
           // "+leer.getDeclaredFields()[i].getType()+" "+leer.getDeclaredFields()[i].getName());
         }
       }
     }
-    Agregador.clase(url, clase, conId, sinId, sets,toString,toStringTypes,vars,varsTypes);
-
+    Agregador.clase(url, clase, conId, sinId, sets,setsType, toString, toStringTypes, vars, varsTypes);
 
   }
 
