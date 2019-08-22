@@ -6,7 +6,8 @@ public class Agregador {
 
   public static void clase(String url, String clase, ArrayList<String> conId,
       ArrayList<String> sinId, ArrayList<String> sets, ArrayList<String> setsType,
-      ArrayList<String> vars, ArrayList<String> varTypes) {
+      ArrayList<String> vars, ArrayList<String> varTypes,
+      ArrayList<String> toString, ArrayList<String> toStringTypes) {
     // String urlSpecs="import com.ctag.paperless.core.domain.model.unit.";
     // String paquetes=urlSpecs+clase;
 
@@ -16,7 +17,8 @@ public class Agregador {
         "import static org.assertj.core.api.Assertions.assertThat; \r\n" +
         "import static org.mockito.Mockito.mock;\r\n" +
         "import static org.mockito.Mockito.when;\r\n" +
-        "\r\n" +
+        "\r\n"+
+        "import org.apache.commons.lang3.builder.ToStringBuilder;" +
         "import java.lang.reflect.Field;\r\n" +
         "import java.util.Set;\r\n" +
         "\r\n" +
@@ -182,7 +184,7 @@ public class Agregador {
 
     String r = "  @Test\r\n" +
         "  public void testToString() throws Exception {\n\n"
-        + "    FieldSetter.setField(underTest, " + clase + ".class.getDeclaredField(\"id\"), 1);\n";
+        + "    FieldSetter.setField(underTest, " + clase + ".class.getDeclaredField(\"id\"), TEST_INTEGER);\n";
     for (int i = 0; i < vars.size(); i++) {
       String name = vars.get(i).substring(0, 1).toUpperCase() + vars.get(i).substring(1);
       String type = varsTypes.get(i);

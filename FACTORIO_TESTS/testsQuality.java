@@ -38,9 +38,9 @@ public class testsQuality {
         if (leer.getDeclaredFields()[i].getType().getModifiers() == 17
             || leer.getDeclaredFields()[i].getName().contains("Id")) {
 
+          toString.add(leer.getDeclaredFields()[i].getName());
+          toStringTypes.add(leer.getDeclaredFields()[i].getType().getSimpleName());
           if (!leer.getDeclaredFields()[i].getName().equalsIgnoreCase("id")) {
-            toString.add(leer.getDeclaredFields()[i].getName());
-            toStringTypes.add(leer.getDeclaredFields()[i].getType().getSimpleName());
 
             // Simple vars Integer Boolean Instant String
             if (leer.getDeclaredFields()[i].getType().getModifiers() == 17) {
@@ -74,7 +74,7 @@ public class testsQuality {
       }
     }
     Agregador.clase(url, clase, conId, sinId, sets, setsType, vars,
-        varsTypes);
+        varsTypes,toString,toStringTypes);
 
   }
 

@@ -36,7 +36,7 @@ public class Clases {
         "\r\n" +
         "  @Test\r\n" +
         "  public void testEmptyConstructor() throws Exception {\r\n" +
-        "    new " + id + "UnitTest();\r\n" +
+        "    new " + id + "();\r\n" +
         "  }\r\n" +
         "\r\n" +
         "  @Test\r\n" +
