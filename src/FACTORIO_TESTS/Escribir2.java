@@ -8,10 +8,10 @@ public class Escribir2 {
 
   public static void escribir(String ruta, String texto,String clase) {
 
-    ruta="C:\\GIT\\PAPERLESS_old\\PDV_EMB\\PDV_EMB\\paperless\\paperless-seed\\src\\main\\java\\FACTORIO_TESTS\\escribir\\TESTS_GENERADOS";
+    ruta="C:\\GIT\\PAPERLESS_old\\PDV_EMB\\PDV_EMB\\paperless\\paperless-seed\\src\\main\\java\\FACTORIO_TESTS\\TESTS_GENERADOS";
 //    ruta="C:\\GIT\\paperless\\quality\\quality-specs\\src\\test\\java\\ut\\com\\ctag\\paperless\\quality\\domain\\model\\"+ruta;
     File archivo = new File(ruta);
-//    archivo.mkdir();
+    archivo.mkdir();
 //    System.err.println(archivo.getPath());
 //    System.err.println(archivo.list()[0]);
     archivo=new File(archivo.getPath()+"\\"+clase+"UnitTest.java");
