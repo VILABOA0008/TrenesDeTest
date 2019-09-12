@@ -1,4 +1,4 @@
-package com.ctag.paperless.psa.totem.FACTORIO_TESTS;
+package FACTORIO_TESTS;
 
 import java.util.ArrayList;
 

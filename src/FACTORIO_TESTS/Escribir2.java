@@ -1,4 +1,4 @@
-package com.ctag.paperless.psa.totem.FACTORIO_TESTS;
+package FACTORIO_TESTS;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,7 +8,7 @@ public class Escribir2 {
 
   public static void escribir(String ruta, String texto,String clase) {
 
-    ruta="C:\\GIT\\PSA\\Totem\\backend\\totem-specs\\src\\test\\java\\ut\\com\\ctag\\paperless\\psa\\totem\\FACTORIO_TESTS\\escribir\\TESTS_GENERADOS";
+    ruta="C:\\GIT\\PAPERLESS_old\\PDV_EMB\\PDV_EMB\\paperless\\paperless-seed\\src\\main\\java\\FACTORIO_TESTS\\escribir\\TESTS_GENERADOS";
 //    ruta="C:\\GIT\\paperless\\quality\\quality-specs\\src\\test\\java\\ut\\com\\ctag\\paperless\\quality\\domain\\model\\"+ruta;
     File archivo = new File(ruta);
 //    archivo.mkdir();

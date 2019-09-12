@@ -1,17 +1,50 @@
-package com.ctag.paperless.psa.totem.FACTORIO_TESTS;
+package FACTORIO_TESTS;
 
-import java.io.File;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 
-public class testsQuality {
+public class GetInfo {
+  
+  
+  public static void testFactories(String url, String pack, String clase) throws Exception {
 
-  public static void main(String[] args) throws Exception {
-
-    buscar();
-
+//    System.err.println("URL           " + url + "\nPACKAGE     " + pack + "\nCLASE         " + clase);
+    System.err.println("\n\n\nCLASE         " + clase);
+    url = url + pack;
+    Class leer = Class.forName(url + "." + clase);
+    Method m=null;
+    Method[]methods=leer.getDeclaredMethods();
+    if(methods.length==2) {
+      if(methods[0].getParameterCount()>methods[1].getParameterCount()) {
+        m=methods[0];}else {m=methods[1];}
+      }else if(methods.length==1) {
+        
+        m=methods[0];
+        
+      }else {
+        
+        System.err.println(clase+"  +de 2 methodos");
+      }
+    
+    if(m!=null) {
+      String types[]=new String[m.getParameterCount()];
+      String vars[]=new String[m.getParameterCount()];
+      System.err.println(m.toGenericString());
+      int c=-1;
+    for(Parameter g:m.getParameters()) {
+      c++;
+      types[c]=g.getType().getSimpleName();
+      vars[c]=g.getName();
+      System.err.println(g.getType().getSimpleName()+"  "+g.getName());
+      
+    }
+      Factory.FactoryTest(pack, clase, types, vars);
+    }
   }
 
-  public static void test(String url, String pack, String clase) throws Exception {
+  
+  public static void testAgregados(String url, String pack, String clase) throws Exception {
     // Class leer =
     // Class.forName("com.ctag.paperless.core.domain.model.bomdefinition.BomDefinition");
     ArrayList<String> conId = new ArrayList<>();
@@ -77,41 +110,4 @@ public class testsQuality {
         varsTypes,toString,toStringTypes);
 
   }
-
-  public static void buscar() {
-    String pack = "", clase;
-    // String url = "com.ctag.paperless.quality.domain.model.";
-    String url = "com.ctag.paperless.psa.totem.domain.model.";
-    // File a = new File(
-    // "C:\\GIT\\paperless\\quality\\quality-specs\\src\\main\\java\\com\\ctag\\paperless\\quality\\domain\\model");
-    File a = new File(
-        "C:\\GIT\\PSA\\Totem\\backend\\totem-specs\\src\\main\\java\\com\\ctag\\paperless\\psa\\totem\\domain\\model");
-    for (File i : a.listFiles()) {
-      System.err.println("\n");
-      pack = i.getName();
-      for (File q : i.listFiles()) {
-        if (q.getName().contains("Id")) {
-          clase = q.getName().split("\\.")[0].replace("Id", "");
-          System.err.println(url + pack + "  " + clase);
-          try {
-            test(url, pack, clase);
-          } catch (Exception e) {
-            System.err.println(e);
-          }
-        }
-      }
-
-    }
-
-  }
 }
-
-// System.exit(1);
-// System.err.println("\n");
-// for (Method q : leer.getDeclaredMethods()) {
-// if(q.getModifiers()==1) {
-// System.err.println(q.getName()+" "+q.getModifiers());
-// for (Parameter x : q.getParameters()) {
-// System.err.print(" "+x.getName());}
-// }
-// }
