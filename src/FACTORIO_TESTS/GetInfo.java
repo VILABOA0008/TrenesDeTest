@@ -7,7 +7,112 @@ import java.util.ArrayList;
 public class GetInfo {
   
   
-  public static void testFactories(String url, String pack, String clase) throws Exception {
+  public static void testAgregadoIdOld(String url, String pack, String clase) throws Exception {
+
+    
+    System.err.println(url+"   "+pack+"   "+clase);
+    String claseSinId=clase.replace("Id", "");
+    
+    
+    String a="package com.ctag.paperless.domain.model."+pack+";\r\n" + 
+        "\r\n" + 
+        "import static org.assertj.core.api.Assertions.assertThat;\r\n" + 
+        "\r\n" + 
+        "import org.junit.Before;\r\n" + 
+        "import org.junit.Test;\r\n" + 
+        "import org.junit.runner.RunWith;\r\n" + 
+        "import org.mockito.Mock;\r\n" + 
+        "import org.mockito.MockitoAnnotations;\r\n" + 
+        "import org.mockito.runners.MockitoJUnitRunner;\r\n" + 
+        "import org.modelmapper.spi.MappingContext;\r\n" + 
+        "\r\n" + 
+        "@RunWith(MockitoJUnitRunner.class)\r\n" + 
+        "public class "+claseSinId+"IdUnitTest {\r\n" + 
+        "\r\n" + 
+        "  @Mock\r\n" + 
+        "  MappingContext<Integer, "+claseSinId+"Id> mappingContextMock;\r\n" + 
+        "  private "+claseSinId+"Id compareEquals;\r\n" + 
+        "  private "+claseSinId+"Id underTest;\r\n" + 
+        "\r\n" + 
+        "  @Before\r\n" + 
+        "  public void setUp() throws Exception {\r\n" + 
+        "    MockitoAnnotations.initMocks(this);\r\n" + 
+        "    underTest = new "+claseSinId+"Id();\r\n" + 
+        "    compareEquals = new "+claseSinId+"Id();\r\n" + 
+        "  }\r\n" + 
+        "\r\n" + 
+        "  @Test\r\n" + 
+        "  public final void testEquals() {\r\n" + 
+        "\r\n" + 
+        "    assertThat(underTest).isNotNull().isEqualTo(compareEquals);\r\n" + 
+        "  }\r\n" + 
+        "\r\n" + 
+        "  @Test\r\n" + 
+        "  public final void testEqualsDifferents() {\r\n" + 
+        "    compareEquals = new "+claseSinId+"Id(1);\r\n" + 
+        "    assertThat(underTest).isNotNull().isNotEqualTo(compareEquals);\r\n" + 
+        "  }\r\n" + 
+        "\r\n" + 
+        "  @Test\r\n" + 
+        "  public final void testEqualsDifferentsObjects() {\r\n" + 
+        "    final Object obj = new Object();\r\n" + 
+        "    assertThat(underTest).isNotNull().isNotEqualTo(obj);\r\n" + 
+        "  }\r\n" + 
+        "\r\n" + 
+        "  @Test\r\n" + 
+        "  public final void testEqualsNull() {\r\n" + 
+        "\r\n" + 
+        "    assertThat(underTest).isNotNull().isNotEqualTo(null);\r\n" + 
+        "  }\r\n" + 
+        "\r\n" + 
+        "  @Test\r\n" + 
+        "  public final void testHashcode() {\r\n" + 
+        "\r\n" + 
+        "    final int oneCode = underTest.hashCode();\r\n" + 
+        "    assertThat(oneCode).isNotNull().isEqualTo(underTest.hashCode());\r\n" + 
+        "    assertThat(oneCode).isNotNull().isEqualTo(compareEquals.hashCode());\r\n" + 
+        "  }\r\n" + 
+        "}\r\n" + 
+        "";
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    ArrayList<String>clases=new ArrayList<>();
+    clases.add("PartState");
+    clases.add("LineType");
+    clases.add("PsaShift");
+    clases.add("ParameterType");
+    clases.add("Parameter");
+    clases.add("SourceMaterialType");
+    clases.add("DeclarationType");
+    clases.add("ProcessVigilance");
+    clases.add("ProcessVigilanceVersion");
+    clases.add("ProcessVigilanceVersionParameter");
+    clases.add("ProcessVigilanceWarning");
+    clases.add("ProcessVigilanceState");
+    clases.add("ProcessLaunch");
+    clases.add("LaunchModifiedParameter");
+    clases.add("CoilLaunch");
+    clases.add("reworkBatch");
+    for(String l:clases) {
+      if(l.equalsIgnoreCase(claseSinId)) {
+        Escribir2.escribir("", a, clase);break;
+      }
+      
+    }
+    
+  }
+    public static void testFactoriesOld(String url, String pack, String clase) throws Exception {
 
 //    System.err.println("URL           " + url + "\nPACKAGE     " + pack + "\nCLASE         " + clase);
     System.err.println("\n\n\nCLASE         " + clase);

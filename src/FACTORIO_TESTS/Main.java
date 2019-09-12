@@ -9,11 +9,33 @@ public class Main {
     String packaje = "com.ctag.paperless.domain.model.";
     String urlFiles = "C:\\GIT\\PAPERLESS_old\\PDV_EMB\\PDV_EMB\\paperless\\paperless-seed\\src\\main\\java\\com\\ctag\\paperless\\domain\\model";
 //    buscarAgregados(packaje, urlFiles);
-    buscarFactoriesOld(packaje, urlFiles);
+//    buscarFactoriesOld(packaje, urlFiles);
+    buscarAgregateIdOld(packaje, urlFiles);
     
     
     
 
+  }
+  
+  public static void buscarAgregateIdOld(String packaje, String urlFile) {
+    String pack = "", clase;
+    String url = packaje;
+    File files = new File(urlFile);
+
+    for (File i : files.listFiles()) {
+      pack = i.getName();
+      for (File q : i.listFiles()) {
+        if (q.getName().contains("Id")) {
+          clase = q.getName().split("\\.")[0];
+//          System.err.println(url + pack + "  " + clase);
+          try {
+            GetInfo.testAgregadoIdOld(url, pack, clase);
+          } catch (Exception e) {
+            System.err.println(e);
+          }
+        }
+      }
+    }
   }
   
   public static void buscarFactoriesOld(String packaje, String urlFile) {
@@ -28,15 +50,13 @@ public class Main {
           clase = q.getName().split("\\.")[0];
 //          System.err.println(url + pack + "  " + clase);
           try {
-            GetInfo.testFactories(url, pack, clase);
+            GetInfo.testFactoriesOld(url, pack, clase);
           } catch (Exception e) {
             System.err.println(e);
           }
         }
       }
-
     }
-
   }
   
   
