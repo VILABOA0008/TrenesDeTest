@@ -140,9 +140,30 @@ public class Agregador {
 
     url = url.split("\\.")[url.split("\\.").length - 1];
     System.err.println(url);
-
-    Escribir2.escribir(url, r, clase);
-  }
+    ArrayList<String>clasess=new ArrayList<>();
+    clasess.add("PartState");
+    clasess.add("LineType");
+    clasess.add("PsaShift");
+    clasess.add("ParameterType");
+    clasess.add("Parameter");
+    clasess.add("SourceMaterialType");
+    clasess.add("DeclarationType");
+    clasess.add("ProcessVigilance");
+    clasess.add("ProcessVigilanceVersion");
+    clasess.add("ProcessVigilanceVersionParameter");
+    clasess.add("ProcessVigilanceWarning");
+    clasess.add("ProcessVigilanceState");
+    clasess.add("ProcessLaunch");
+    clasess.add("LaunchModifiedParameter");
+    clasess.add("CoilLaunch");
+    clasess.add("reworkBatch");
+    for(String l:clasess) {
+      if(l.equalsIgnoreCase(clase)) {
+        Escribir2.escribir(url, r, clase);break;
+      }
+      
+ 
+  }}
 
   public static String Simplevars(String url, String clase, ArrayList<String> vars,
       ArrayList<String> varsTypes) {
