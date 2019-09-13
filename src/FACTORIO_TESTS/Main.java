@@ -57,7 +57,7 @@ public class Main {
               GetInfo.testRepresentationOld(url, pack, clase);
             
             }else {
-            GetInfo.testFactoriesOld(url, pack, clase);
+//            GetInfo.testFactoriesOld(url, pack, clase);
             }
           } catch (Exception e) {
             System.err.println(e);

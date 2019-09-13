@@ -140,7 +140,7 @@ public class GetInfo {
   }
 
   public static void testRepresentationOld(String url, String pack, String clase) throws ClassNotFoundException {
-
+System.err.println(clase);
      System.err.println("URL " + url + "\nPACKAGE " + pack + "\nCLASE " + clase);
     System.err.println("\n\n\nCLASE         " + clase);
     url = url + pack;

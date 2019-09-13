@@ -110,7 +110,9 @@ public class Factory {
 
   public static void RepresentaionTest(String pack, String claseRepresentation, String[] types,
       String vars[]) {
-    String clase = claseRepresentation.replace("Representation", "");
+    if(claseRepresentation.equalsIgnoreCase("PartBomRepresentation")) {
+    System.err.println("FACTORIO_TESTS.TESTS_GENERADOSFACTORIO_TESTS.TESTS_GENERADOSFACTORIO_TESTS.TESTS_GENERADOSFACTORIO_TESTS.TESTS_GENERADOS");
+    } String clase = claseRepresentation.replace("Representation", "");
     String b = "", c = "", d = "";
 
     String toString1 = "";
@@ -149,8 +151,10 @@ public class Factory {
           } else {
             var = var.replace("ID", "_ID");
           }
+          String despital=varcap.substring(0,1).toLowerCase()+varcap.substring(1);
           toString1 += "    underTest.set" + varcap + "(" + var + ");\r\n";
-          toString3 += "    " + varcap + "=\" + " + var + "+ \",";
+          toString3 += "" + despital + "=\" + " + var + "+ \", ";
+//          "PartBomRepresentation [idPart=" + ID_PART+ ", usual="+ USUAL+"]");
           c += "  @Test\r\n" +
               "  public void test" + varcap + "() {\r\n" +
               "    underTest.set" + varcap + "(" + var + ");\r\n" +
@@ -158,8 +162,9 @@ public class Factory {
               + ");\r\n" +
               "  }\n\n";
         } else {
+          String despital=varcap.substring(0,1).toLowerCase()+varcap.substring(1);
           toString1 += "    underTest.set" + varcap + "(" + var + ");\r\n";
-          toString3 += "    " + varcap + "=\" + " + var + "+ \",";
+          toString3 += "" + despital + "=\" + " + var + "+ \", ";
           c += "  @Test\r\n" +
               "  public void test" + varcap + "() {\r\n" +
               "    underTest.set" + varcap + "(" + var + ");\r\n" +
@@ -179,7 +184,7 @@ public class Factory {
           "            \"" + clase + "Representation [";
 
       String toString = toString0 + toString1 + toString2
-          + toString3.substring(0, toString3.length() - 1) + "]\");";
+          + toString3.substring(0, toString3.length() - 2) + "]\");";
 
       String equals = "  @Test\r\n" +
           "  public final void testEqualsObject() {\r\n" +
@@ -211,28 +216,31 @@ public class Factory {
           "  }\r\n" +
           c +
           " \n\n" + equals + "\r\n" +
-//          " " + toString + "\r\n" +
+          " " + toString + "\n}\r\n" +
           "\r\n" +
           "  }\r\n" +
           "\r\n" +
           "";
       ArrayList<String> clases = new ArrayList<>();
-      clases.add("PartState");
-      clases.add("LineType");
-      clases.add("PsaShift");
-      clases.add("ParameterType");
-      clases.add("Parameter");
-      clases.add("SourceMaterialType");
-      clases.add("DeclarationType");
-      clases.add("ProcessVigilance");
-      clases.add("ProcessVigilanceVersion");
-      clases.add("ProcessVigilanceVersionParameter");
-      clases.add("ProcessVigilanceWarning");
-      clases.add("ProcessVigilanceState");
-      clases.add("ProcessLaunch");
-      clases.add("LaunchModifiedParameter");
-      clases.add("CoilLaunch");
-      clases.add("reworkBatch");
+//      clases.add("PartState");
+//      clases.add("LineType");
+//      clases.add("PsaShift");
+//      clases.add("ParameterType");
+//      clases.add("Parameter");
+//      clases.add("SourceMaterialType");
+//      clases.add("DeclarationType");
+//      clases.add("ProcessVigilance");
+//      clases.add("ProcessVigilanceVersion");
+//      clases.add("ProcessVigilanceVersionParameter");
+//      clases.add("ProcessVigilanceWarning");
+//      clases.add("ProcessVigilanceState");
+//      clases.add("ProcessLaunch");
+//      clases.add("LaunchModifiedParameter");
+//      clases.add("CoilLaunch");
+//      clases.add("reworkBatch");
+      clases.add("PartSimple");
+
+      
       for (String l : clases) {
         if (l.equalsIgnoreCase(clase)) {
           Escribir2.escribir("", a, claseRepresentation);
