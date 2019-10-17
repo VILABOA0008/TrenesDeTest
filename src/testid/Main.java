@@ -1,8 +1,8 @@
-package tests;
+package testid;
 
 import java.io.File;
 
-public class Test {
+public class Main {
 
   public static void main(String[] args) throws Exception {
     String s; 
@@ -11,7 +11,7 @@ public class Test {
    for (File i : a.listFiles()) {   
       for (File q : i.listFiles()) {   
         if(q.getName().contains("Id")) {
-       s=q.getName().split("\\.")[0];Clases.Id(i.getName(),s);
+       s=q.getName().split("\\.")[0];IdClass.Id(i.getName(),s);
         System.err.println(s);}
     }
     

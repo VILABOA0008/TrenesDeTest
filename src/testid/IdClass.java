@@ -1,6 +1,6 @@
-package tests;
+package testid;
 
-public class Clases {
+public class IdClass {
 
   public static void Id(String clase, String id) {
 
