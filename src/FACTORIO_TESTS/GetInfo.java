@@ -227,13 +227,14 @@ Factory.RepresentaionTest(pack, clase, types, vars);
                   - 1];
           type = type.replace(">", "");
           setsType.add(type);
-          // System.err.println(leer.getDeclaredFields()[i].getType().getModifiers()+"
-          // "+leer.getDeclaredFields()[i].getType()+" "+leer.getDeclaredFields()[i].getName());
+           System.err.println(leer.getDeclaredFields()[i].getType().getModifiers()+
+               ""+leer.getDeclaredFields()[i].getType()+" "+leer.getDeclaredFields()[i].getName());
         }
       }
     }
-    Agregador.clase(url, clase, conId, sinId, sets, setsType, vars,
-        varsTypes, toString, toStringTypes);
+    
+//    Agregador.clase(url, clase, conId, sinId, sets, setsType, vars,
+//        varsTypes, toString, toStringTypes);
 
   }
 }
