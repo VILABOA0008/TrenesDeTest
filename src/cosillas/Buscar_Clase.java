@@ -13,36 +13,52 @@ public class Buscar_Clase {
 
   public static void main(String[] args) throws ClassNotFoundException {
 
-    String json="{";
     String paquete = "com.ctag.paperless.rest.shiftsummary.";
     String clase = "ShiftSummaryRepresentation";
     
+    String clas=clase.substring(0,1).toLowerCase()+clase.substring(1);
+    clas=clas.replace("Representation", "");
+    String c="\"";
+    String cc="\\\"";
+    String json=c+"{"+c;
     ArrayList<String>basicos=new ArrayList<>(Arrays.asList("Integer","LocalDate"));
     Map<String, String> map=new HashMap<>();
     map.put("Integer", "1");
     map.put("LocalDate", "null");
+    
+    int mode=2;
     
     Class leer = Class.forName(paquete + clase);
     for (int i = 0; i < leer.getDeclaredFields().length; i++) {
       
       Field field = leer.getDeclaredFields()[i];
       String type = field.getType().getSimpleName();
-      json+="\n\""+field.getName()+"\":";
+      json+="\n +"+c+cc+field.getName()+cc+":";
       if(basicos.contains(type)) {
         
-        json+=map.get(type);
+        switch(mode) {
+        case 1:json+=c+map.get(type)+c;break;
+        case 2:json+=c+"+ "+clas+".get ";if(i != leer.getDeclaredFields().length-1) {json+="+ "+c;}break;     
+             
+        }
+        
+        
       }else {
-        json+="new"+field.getName();
+        switch(mode) {
+        case 1:json+=cc+"new"+field.getName()+cc;break;
+        case 2:json+=c+"+ "+clas+".get ";if(i != leer.getDeclaredFields().length-1) {json+="+ "+c;}break;     
+        
+        }
         
       }
-      json+=",";
+      if(i != leer.getDeclaredFields().length-1) {
+      json+=","+c;}
 //      System.err.print(leer.getDeclaredFields()[i].getName() ); 
 //      System.err.println("   "+leer.getDeclaredFields()[i].getType().getSimpleName() ); 
       
     }
 
-    json+="}";
-    json=json.replace(",}", "\n}");
+    json+="\n+"+c+"}"+c;
     
     Toolkit.getDefaultToolkit()
     .getSystemClipboard()
