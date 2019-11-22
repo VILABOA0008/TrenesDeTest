@@ -1,14 +1,29 @@
 package cosillas;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ToSwagger {
 
-  public static void main(String[] args) throws ClassNotFoundException {
-    String paquete = "com.ctag.paperless.core.domain.model.personal.";
-    String clase = "Personal";
+  public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException {
+    
+    String clase = "UnitRepresentation";
+
+    String url =
+        "C:\\GIT\\PAPERLESS_old\\PDV_EMB\\PDV_EMB\\paperless\\paperless-seed\\src\\main\\java\\com\\ctag\\paperless";
+
+    File buscar = buscar(url, clase + ".java");
+    String paquete = getPackage(buscar);
+    String clas = clase.substring(0, 1).toLowerCase() + clase.substring(1);
+    clas = clas.replace("Representation", "");
+
+    Class leer = Class.forName(paquete + clase);
+    
 
     Map<String, String> toSwaggerType = new HashMap<>();
     toSwaggerType.put("String", "          type: string");
@@ -16,6 +31,7 @@ public class ToSwagger {
     toSwaggerType.put("Instant", "          format: date-time\r\n" + "          type: string");
     toSwaggerType.put("BigDecimal", "          format: double\r\n" + "          type: number");
     toSwaggerType.put("LocalDate", "          format: date\r\n" + "          type: string");
+    toSwaggerType.put("LocalDateTime", "          format: date\r\n" + "          type: string");
     toSwaggerType.put("Boolean", "          type: boolean");
 
     ArrayList<String> sinId = new ArrayList<>();
@@ -26,7 +42,6 @@ public class ToSwagger {
     ArrayList<String> vars = new ArrayList<>();
     ArrayList<String> varsTypes = new ArrayList<>();
 
-    Class leer = Class.forName(paquete + clase);
     for (int i = 0; i < leer.getDeclaredFields().length; i++) {
 
       if (!leer.getDeclaredFields()[i]
@@ -83,7 +98,7 @@ public class ToSwagger {
           required.add("\n        - "+n);
           onSwagger.add("\n        "+n+": \r\n" + 
               "          description: \""+n+" of "+clase+"\"\n"+toSwaggerType.get(varsTypes.get(c)));
-//          System.err.println(varsTypes.get(c) + "   " + n);
+//          System.err.println(varsTypes.get(c) + "  we  " + n);
           c++;
         });
     
@@ -121,6 +136,47 @@ public class ToSwagger {
 
   System.err.println("\n"+b);
   
+  }
+  
+  
+  
+  public static File buscar(String url, String clas) {
+    File found = null;
+    File clases = new File(url);
+
+    for (File file : new ArrayList<>(Arrays.asList(clases.listFiles()))) {
+      if (file.isDirectory()) {
+        found = buscar(file.getAbsolutePath(), clas);
+        if (found != null) {
+          return found;
+        }
+      } else {
+        if (file.getName().equalsIgnoreCase(clas)) {
+          return file;
+        }
+      }
+    }
+
+    return found;
+  }
+
+  public static String getPackage(File file) throws FileNotFoundException {
+
+    Scanner sc = new Scanner(file);
+
+    while (sc.hasNextLine()) {
+      String nextLine = sc.nextLine();
+      if (nextLine.contains("package")) {
+        nextLine = nextLine.replace(" ", "");
+        nextLine = nextLine.replace("package", "");
+        nextLine = nextLine.replace(";", "");
+        sc.close();
+        return nextLine + ".";
+      }
+    }
+    sc.close();
+
+    return null;
   }
 
   
