@@ -2,7 +2,7 @@ package tests;
 
 import java.io.File;
 
-public class Test {
+public class TestDeIds {
 
   public static void main(String[] args) throws Exception {
     String s; 
@@ -18,9 +18,7 @@ public class Test {
   }
     
     
-    String test="";
-    
-    buscar(url);
+//    buscar(url);
   }
   
   public static void buscar(String url) {

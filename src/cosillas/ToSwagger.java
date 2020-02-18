@@ -18,7 +18,7 @@ public class ToSwagger {
     toSwaggerType.put("LocalDate", "          format: date\r\n" + "          type: string");
     toSwaggerType.put("Boolean", "          type: boolean");
 
-    ArrayList<String> sinId = new ArrayList<>();
+    ArrayList<String> idObjects = new ArrayList<>();
     ArrayList<String> onSwagger = new ArrayList<>();
     ArrayList<String> required = new ArrayList<>();
     ArrayList<String> toString = new ArrayList<>();
@@ -55,34 +55,34 @@ public class ToSwagger {
           name = name.toUpperCase().substring(0, 1) + name.substring(1);
           if (name.contains("Id")) {
           } else {
-            sinId.add("id" + name);
+            idObjects.add("id" + name);
           }
         }
       }
     }
 
-    sinId.forEach(
-        n -> {
-          required.add("\n        - "+n);
+    idObjects.forEach(
+        objectId -> {
+          required.add("\n        - "+objectId);
           onSwagger.add(
               "\n        "
-                  + n
+                  + objectId
                   + ": \r\n"
                   + "          description: \""
-                  + n.substring(0, 2)
+                  + objectId.substring(0, 2)
                   + " "
-                  + n.substring(2)
+                  + objectId.substring(2)
                   + "\"\r\n"
                   + "          format: int32\r\n"
                   + "          type: integer");
         });
 
     vars.forEach(
-        n -> {
+        var -> {
           int c = 0;
-          required.add("\n        - "+n);
-          onSwagger.add("\n        "+n+": \r\n" + 
-              "          description: \""+n+" of "+clase+"\"\n"+toSwaggerType.get(varsTypes.get(c)));
+          required.add("\n        - "+var);
+          onSwagger.add("\n        "+var+": \r\n" + 
+              "          description: \""+var+" of "+clase+"\"\n"+toSwaggerType.get(varsTypes.get(c)));
 //          System.err.println(varsTypes.get(c) + "   " + n);
           c++;
         });
@@ -104,7 +104,12 @@ public class ToSwagger {
     a=a.replace(",", "");
     a=a.replace("[", "");
     a=a.replace("]", "");
+    
     System.err.println(a ); 
+
+    
+    
+    
   
   String b="    "+clase+":\r\n" + 
       "      allOf: \r\n" + 
