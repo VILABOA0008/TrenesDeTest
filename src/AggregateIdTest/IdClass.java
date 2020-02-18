@@ -1,4 +1,4 @@
-package testid;
+package AggregateIdTest;
 
 public class IdClass {
 
@@ -58,7 +58,7 @@ public class IdClass {
         "\r\n" +
         "    assertThat(" + id + ".getOptional(null)).isNotNull().isEqualTo(Optional.empty());\r\n"
         +
-        "  }" +
+        "  }\n" +
         "}";
 
     Escribir2.escribir(

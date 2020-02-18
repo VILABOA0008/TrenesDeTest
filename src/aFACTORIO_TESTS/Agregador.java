@@ -1,4 +1,4 @@
-package FACTORIO_TESTS;
+package aFACTORIO_TESTS;
 
 import java.util.ArrayList;
 

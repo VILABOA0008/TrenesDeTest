@@ -1,4 +1,4 @@
-package FACTORIO_TESTS;
+package aFACTORIO_TESTS;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -233,8 +233,8 @@ Factory.RepresentaionTest(pack, clase, types, vars);
       }
     }
     
-//    Agregador.clase(url, clase, conId, sinId, sets, setsType, vars,
-//        varsTypes, toString, toStringTypes);
+    Agregador.clase(url, clase, conId, sinId, sets, setsType, vars,
+        varsTypes, toString, toStringTypes);
 
   }
 }

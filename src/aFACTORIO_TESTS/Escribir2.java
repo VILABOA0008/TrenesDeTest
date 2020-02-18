@@ -1,4 +1,4 @@
-package testid;
+package aFACTORIO_TESTS;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,18 +8,19 @@ public class Escribir2 {
 
   public static void escribir(String ruta, String texto,String clase) {
 
-    System.err.println(clase+"\n\n\n"+texto+"\n\n\n\n\n");
-//    ruta="C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\testsss";
-    System.err.println(ruta);
+    ruta="C:\\GIT\\PAPERLESS_old\\PDV_EMB\\PDV_EMB\\paperless\\paperless-seed\\src\\main\\java\\FACTORIO_TESTS\\TESTS_GENERADOS";
+//    ruta="C:\\GIT\\paperless\\quality\\quality-specs\\src\\test\\java\\ut\\com\\ctag\\paperless\\quality\\domain\\model\\"+ruta;
     File archivo = new File(ruta);
     archivo.mkdir();
-    archivo=new File(archivo.getPath()+"\\"+clase+".java");
+//    System.err.println(archivo.getPath());
+//    System.err.println(archivo.list()[0]);
+    archivo=new File(archivo.getPath()+"\\"+clase+"UnitTest.java");
     //       if(!archivo.exists()){
     try {
       FileWriter aWriter = new FileWriter(archivo, false);
-//      aWriter.write(texto);
-//      aWriter.flush();
-//      aWriter.close();
+      aWriter.write(texto);
+      aWriter.flush();
+      aWriter.close();
       System.out.println("bien");
     } catch (IOException e) {
       System.out.println("Ruta Erronea Cambiela Plis.");
