@@ -20,7 +20,7 @@ public class DtoIntoAggregate {
             + "    assertThat(component.getStationId().getId()).isEqualTo(ID);\r\n"
             + "    assertThat(component.getStateId().getId()).isEqualTo(ID);\r\n"
             + "    assertThat(component.getName()).isEqualTo(TEST_STRING);\r\n"
-            + "    assertThat(component.getShortName()).isEqualTo(TEST_STRING);";
+            + "    assertThat(component.getShortName())s.isEqualTo(TEST_STRING);";
 
     String p = pre.replace("targetAggregate.s", "assertThat(" + clase + ".g");
     p = p.replace("(sourceAggregate", "()).isEqualTo(" + clase + "");
