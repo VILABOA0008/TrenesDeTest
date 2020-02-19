@@ -4,6 +4,8 @@ public class AggregateIntoDto {
 
   public static void main(String[] args) {
 
+    final String TARGET="targetDto";
+    final String SOURCE="sourceAggregate";
     String clase = "Component";
     clase = clase.toLowerCase();
     String pre =
@@ -24,8 +26,8 @@ public class AggregateIntoDto {
             + "    assertThat(dto.getName()).isEqualTo(component.getName());\r\n"
             + "    assertThat(dto.getShortName()).isEqualTo(component.getShortName());";
 
-    String p = pre.replace("targetDto.s", "assertThat(dto.g");
-    p = p.replace("(sourceAggregate", "()).isEqualTo(" + clase + "");
+    String p = pre.replace(""+TARGET+".s", "assertThat(dto.g");
+    p = p.replace("("+SOURCE+".g", "()).isEqualTo(" + clase + ".g");
     
     System.err.println(p ); 
     
