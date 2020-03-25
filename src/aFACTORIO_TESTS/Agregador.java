@@ -81,10 +81,11 @@ public class Agregador {
 
     equals += "EqualsVerifier.forClass(" + clase + ".class)\n";
     for (int i = 0; i < sinId.size(); i++) {
+      if(!sinId.get(i).equalsIgnoreCase("id")) {
       String clas = sinId.get(i).substring(0, 1).toUpperCase() + sinId.get(i).substring(1);
       equals += ".withPrefabValues(" + clas + ".class, mock(" + clas + ".class), mock(" + clas
           + ".class))\n";
-    }
+    }}
 
     if (!sets.isEmpty()) {
       equals += ".withPrefabValues(Set.class, mock(Set.class),mock(Set.class))\n";
@@ -219,21 +220,20 @@ public class Agregador {
     }
 
     r += "    assertThat(underTest.toString()).isEqualTo(\r\n" +
-        "        new ToStringBuilder(underTest)\n"
-        + "        .append(\"id\", 1)\n";
+        "        \""+clase+" [id=\"+TEST_INTEGER\n";
 
     for (int i = 0; i < vars.size(); i++) {
       String name = vars.get(i).substring(0, 1).toUpperCase() + vars.get(i).substring(1);
       String type = varsTypes.get(i);
       
-      r += "            .append(\"" + vars.get(i) + "\", ";
+      r += "            +\", " + vars.get(i) + "=";
       
-      if(type.equalsIgnoreCase("String")) {r+= "\"test" + name + "\")\n";}else if(type.equalsIgnoreCase("Boolean")){ 
+      if(type.equalsIgnoreCase("String")) {r+= "test" + name + "\"\n";}else if(type.equalsIgnoreCase("Boolean")){ 
         r+=true+")\n";}else if(type.equalsIgnoreCase("Integer")){ 
-          r+=1+")\n";}
+          r+="\"+TEST_INTEGER\n";}
       
     }
-    r += "            .toString());\n}\n";
+    r += "            + \"]\");\n}\n";
     return r;
   }
 }

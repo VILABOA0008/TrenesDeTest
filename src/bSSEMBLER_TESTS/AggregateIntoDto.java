@@ -1,21 +1,21 @@
 package bSSEMBLER_TESTS;
 
+import java.time.ZoneOffset;
+
 public class AggregateIntoDto {
 
   public static void main(String[] args) {
 
-    final String TARGET="targetDto";
-    final String SOURCE="sourceAggregate";
-    String clase = "Component";
-    clase = clase.toLowerCase();
+    final String TARGET = "targetDto";
+    final String NEW_TARGET = "dto";
+    final String SOURCE = "sourceAggregate";
+    String clase = "defect";
     String pre =
-        "    "
-            + "    targetDto.setIdComponent(sourceAggregate.getId().getId());\r\n"
-            + "    targetDto.setIdComponentType(sourceAggregate.getComponentTypeId().getId());\r\n"
-            + "    targetDto.setIdStation(sourceAggregate.getStationId().getId());\r\n"
-            + "    targetDto.setState(sourceAggregate.getStateId().getId());\r\n"
-            + "    targetDto.setName(sourceAggregate.getName());\r\n"
-            + "    targetDto.setShortName(sourceAggregate.getShortName());";
+        "    "+
+"    targetDto.setIdBasicGroup(sourceAggregate.getBasicGroupId().getId());\r\n" + 
+"    targetDto.setIdDefect(sourceAggregate.getId().getId());\r\n" + 
+"    targetDto.setName(sourceAggregate.getName());\r\n" + 
+"    targetDto.setState(sourceAggregate.getStateId().getId());";
 
     String pos =
         "    "
@@ -26,10 +26,9 @@ public class AggregateIntoDto {
             + "    assertThat(dto.getName()).isEqualTo(component.getName());\r\n"
             + "    assertThat(dto.getShortName()).isEqualTo(component.getShortName());";
 
-    String p = pre.replace(""+TARGET+".s", "assertThat(dto.g");
-    p = p.replace("("+SOURCE+".g", "()).isEqualTo(" + clase + ".g");
-    
-    System.err.println(p ); 
-    
+    String p = pre.replace("" + TARGET + ".s", "assertThat(" + NEW_TARGET + ".g");
+    p = p.replace("(" + SOURCE + ".g", "()).isEqualTo(" + clase + ".g");
+
+    System.err.println(p);
   }
 }
