@@ -50,8 +50,11 @@ public class IntegrationSample {
             + clase
             + "IntegrationTest {\r\n"
             + "\r\n"
-            + "  @Configuration(\"runtime.web.baseUrlSlash\")\r\n"
-            + "  private String baseUrl;\r\n"
+            + "  @Configuration(\"runtime.web.baseUrlSlash\")\r\n" 
+            +"  private String url;\r\n" 
+            +"  private static final int ID = 1;\r\n" 
+            +"  private static final String SLASH = \"/\";\r\n" 
+            +"  private static final String API = \"api/page\""
             + "  @Inject\r\n"
             + "  private  "
             + clase
