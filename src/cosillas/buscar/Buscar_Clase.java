@@ -18,26 +18,25 @@ public class Buscar_Clase {
 
   public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException {
 
-    int testType =1;
+    int testType = 1;
     int mode = GET;
-    String clase = "ButtonApiServiceImpl";
+    String clase = "LineApiServiceImpl";
 
     String url =
-        "C:\\GIT\\PSA\\Totem\\backend";
+        "C:\\GIT\\PSA\\Totem\\backend\\totem-rest\\src\\main\\java\\com\\ctag\\paperless\\psa\\totem";
 
     File buscar = buscar(url, clase + ".java");
     String paquete = getPackage(buscar);
     String clas = clase.substring(0, 1).toLowerCase() + clase.substring(1);
     clas = clas.replace("Representation", "");
     Class leer = Class.forName(paquete + clase);
-System.err.println(clase.split("Api")[0]);
+    // System.err.println(clase.split("Api")[0]);
 
-    switch(testType) {
-    
-    case 1:integrationTests(leer,clase.split("Api")[0]);
-    
+    switch (testType) {
+      case 1:
+        integrationTests(leer, clase.split("Api")[0]);
     }
-    
+
     System.exit(1);
     String c = "\"";
     String cc = "\\\"";
@@ -47,7 +46,6 @@ System.err.println(clase.split("Api")[0]);
     Map<String, String> map = new HashMap<>();
     map.put("Integer", "+1+");
     map.put("LocalDate", "null");
-
 
     for (int i = 0; i < leer.getDeclaredFields().length; i++) {
 
@@ -61,7 +59,7 @@ System.err.println(clase.split("Api")[0]);
             json += c + map.get(type) + c;
             break;
           case 2:
-            json += c + "+ " + clas + ".get" + toMayusq(field.getName() + "()+ "+c);
+            json += c + "+ " + clas + ".get" + toMayusq(field.getName() + "()+ " + c);
             break;
         }
 
@@ -92,22 +90,20 @@ System.err.println(clase.split("Api")[0]);
     System.err.println(json);
   }
 
-  public static void integrationTests(Class leer,String clase ) {
-    ArrayList<String>methods=new ArrayList<>();
+  public static void integrationTests(Class leer, String clase) {
+    ArrayList<String> methods = new ArrayList<>();
     for (int i = 0; i < leer.getDeclaredMethods().length; i++) {
-      if(leer.getDeclaredMethods()[i].getReturnType().toString().contains("Response")) {
+      if (leer.getDeclaredMethods()[i].getReturnType().toString().contains("Response")) {
         String name = leer.getDeclaredMethods()[i].getName();
-        name="test"+name.substring(0, 1).toUpperCase()+name.substring(1);
+        name = "test" + name.substring(0, 1).toUpperCase() + name.substring(1);
         methods.add(name);
-        System.err.println(name ); 
-        
-      } 
-      
+        //        System.err.println(name );
+
+      }
     }
-IntegrationSample.integrationTestClass(clase, methods);
-    
+    IntegrationSample.integrationTestClass(clase, methods);
   }
-  
+
   public static String getPackage(File file) throws FileNotFoundException {
 
     Scanner sc = new Scanner(file);

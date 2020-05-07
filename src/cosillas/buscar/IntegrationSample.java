@@ -6,16 +6,19 @@ import java.util.stream.Collectors;
 public class IntegrationSample {
   public static void integrationTestClass(String clase, ArrayList<String> methods) {
 
-    ArrayList<String> testMethods = new ArrayList<>();
-    String testeos = methods.stream().map(
-        method ->
-                "@Test\r\n"
-                    + "    public void "
-                    + method
-                    + "() {\r\n"
-                    + "      \r\n"
-                    + "      \r\n"
-                    + "    }\n").collect(Collectors.joining());
+    String testeos =
+        methods
+            .stream()
+            .map(
+                method ->
+                    "@Test\r\n"
+                        + "    public void "
+                        + method
+                        + "() {\r\n"
+                        + "      \r\n"
+                        + "      \r\n"
+                        + "    }\n")
+            .collect(Collectors.joining());
     String test =
         "\r\n"
             + "import static io.restassured.RestAssured.given; \r\n"
@@ -50,11 +53,11 @@ public class IntegrationSample {
             + clase
             + "IntegrationTest {\r\n"
             + "\r\n"
-            + "  @Configuration(\"runtime.web.baseUrlSlash\")\r\n" 
-            +"  private String url;\r\n" 
-            +"  private static final int ID = 1;\r\n" 
-            +"  private static final String SLASH = \"/\";\r\n" 
-            +"  private static final String API = \"api/page\""
+            + "  @Configuration(\"runtime.web.baseUrlSlash\")\r\n"
+            + "  private String url;\r\n"
+            + "  private static final int ID = 1;\r\n"
+            + "  private static final String SLASH = \"/\";\r\n"
+            + "  private static final String API = \"api/page\";\n"
             + "  @Inject\r\n"
             + "  private  "
             + clase
@@ -62,7 +65,7 @@ public class IntegrationSample {
             + " \r\n"
             + testeos
             + "}\r\n";
-    
-    System.err.println(test ); 
+
+    System.err.println(test);
   }
 }
