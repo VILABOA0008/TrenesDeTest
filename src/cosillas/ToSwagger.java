@@ -12,15 +12,15 @@ public class ToSwagger {
 
   public static void main(String[] args) throws ClassNotFoundException, FileNotFoundException {
     
-    String clase = "UnitRepresentation";
+    String clase = "ConsumptionTypeCreateDto";
 
     String url =
-        "C:\\GIT\\PAPERLESS_old\\PDV_EMB\\PDV_EMB\\paperless\\paperless-seed\\src\\main\\java\\com\\ctag\\paperless";
+        "C:\\Users\\pabcos\\Documents\\trains\\prubas\\proyecto seedstack base\\src\\main\\java\\ctag\\dtos\\dto";
 
     File buscar = buscar(url, clase + ".java");
     String paquete = getPackage(buscar);
     String clas = clase.substring(0, 1).toLowerCase() + clase.substring(1);
-    clas = clas.replace("Representation", "");
+    clas = clas.replace("Dto", "");
 
     Class leer = Class.forName(paquete + clase);
     
