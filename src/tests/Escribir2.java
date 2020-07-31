@@ -1,4 +1,4 @@
-package aFACTORIO_TESTS;
+package tests;
 
 import java.io.File;
 import java.io.FileWriter;
