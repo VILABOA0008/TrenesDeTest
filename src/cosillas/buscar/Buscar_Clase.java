@@ -20,11 +20,10 @@ public class Buscar_Clase {
 
     int testType = 1;
     int mode = GET;
-    String clase = "LineApiServiceImpl";
+    String clase = "WeekTemplateDayApiServiceImpl";
 
     String url =
-        "C:\\GIT\\PSA\\Totem\\backend\\totem-rest\\src\\main\\java\\com\\ctag\\paperless\\psa\\totem";
-
+        "C:\\GIT\\PEI-BE\\pei-rest\\src\\main\\java\\com\\ctag\\paperless\\psa\\rest";
     File buscar = buscar(url, clase + ".java");
     String paquete = getPackage(buscar);
     String clas = clase.substring(0, 1).toLowerCase() + clase.substring(1);
@@ -96,7 +95,8 @@ public class Buscar_Clase {
       if (leer.getDeclaredMethods()[i].getReturnType().toString().contains("Response")) {
         String name = leer.getDeclaredMethods()[i].getName();
         name = "test" + name.substring(0, 1).toUpperCase() + name.substring(1);
-        methods.add(name);
+        if(!name.contains("$")) {
+        methods.add(name);}
         //        System.err.println(name );
 
       }
