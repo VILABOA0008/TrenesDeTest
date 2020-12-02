@@ -5,14 +5,12 @@ import java.util.ArrayList;
 public class Factory {
 
   public static void FactoryTest(
-      String pack, String claseFactory, String[] types, String vars[], String nameMethod) {
-    System.err.println(" asdasd   "+claseFactory ); 
-    String claseFactoryDefault=claseFactory;
+      String url,String pack, String claseFactory, String[] types, String vars[], String nameMethod) {
     claseFactory = claseFactory.replace("Default", "");
     String clase = claseFactory.replace("Factory", "");
     claseFactory = clase + "Factory";
     String b = "", asserts = "", d = "";
-    for (int i = 1; i < types.length; i++) {
+    for (int i = 0; i < types.length; i++) {
       String value;
       String var = vars[i];
       switch (types[i]) {
@@ -28,88 +26,120 @@ public class Factory {
         case "Double":
           value = "1D";
           break;
+        case "Instant":
+          value = "Instant.now()";
+          break;
+        case "Float":
+          value = "1f";
+          break;
         case "LocalDateTime":
-          value = "LocalDateTime.now();";
+          value = "LocalDateTime.now()";
           break;
         case "LocalDate":
-          value = "LocalDate.now();";
+          value = "LocalDate.now()";
           break;
         default:
           value = "1";
+          if (types[i].contains("Id")) {
+            value = "new " + types[i] + "(1)";
+          }
       }
-      var = var.toUpperCase();
-      if (var.contains("ID")) {
-        if (var.substring(0, 2).contains("ID")) {
-          var = var.replace("ID", "ID_");
-        } else {
-          var = var.replace("ID", "_ID");
+      String upper=var;
+      for (int j = 0; j < upper.length(); j++) {
+        if(upper.substring(j, j+1).equals(upper.substring(j, j+1).toUpperCase())) {
+          upper=upper.substring(0,j)+"_"+upper.substring(j);
+          j++;
         }
+        
+      }
+      
+      var = upper.toUpperCase();
+      if (var.contains("ID")) {
+//        if (var.substring(0, 2).contains("ID")) {
+//          var = var.replace("ID", "ID_");
+//        } else {
+//          var = var.replace("ID", "_ID");
+//        }
         asserts +=
-            "    assertThat(test.get"
-                + vars[i]
-                    .substring(0, 1)
-                    .replace(vars[i].substring(0, 1), vars[i].substring(0, 1).toUpperCase())
-                + vars[i].substring(1)
-                + "().getId()).isNotNull().isEqualTo("
-                + var
-                + ");\n";
-      } else {
-        asserts +=
-            "    assertThat(test.get"
+            "    assertThat(object.get"
                 + vars[i]
                     .substring(0, 1)
                     .replace(vars[i].substring(0, 1), vars[i].substring(0, 1).toUpperCase())
                 + vars[i].substring(1)
                 + "()).isNotNull().isEqualTo("
                 + var
-                + ");\r\n";
+                + ");\n";
+      } else {
+        asserts +=
+            "    assertThat(object.get"
+                + vars[i]
+                    .substring(0, 1)
+                    .replace(vars[i].substring(0, 1), vars[i].substring(0, 1).toUpperCase())
+                + vars[i].substring(1)
+                + "()).isNotNull().isEqualTo("
+                + var
+                + ");\n";
       }
       b += "  private static final " + types[i] + " " + var + " = " + value + ";\n";
       d += var + ",";
     }
     d = d.substring(0, d.length() - 1);
     String a =
-        "package com.ctag.paperless.domain.model."
-            + pack
-            + ";\r\n"
-            + "\r\n"
-            + "import static org.assertj.core.api.Assertions.assertThat; \r\n"
-            + "\r\n"
-            + "import org.junit.Before;\r\n"
-            + "import org.junit.Test;\r\n"
-            + "\r\n"
+        "package "
+            + url
+            + ";\n"
+            + "\n"
+            + "import static org.assertj.core.api.Assertions.assertThat; \n"
+            + "import javax.inject.Inject;\n"
+            + "import javax.transaction.Transactional;\n"
+            + "\n"
+            + "import org.junit.Before;\n"
+            + "import org.junit.Test;\n"
+            + "\n"
+            + "@RunWith(SeedITRunner.class)\n"
+            + "@Transactional\n"
+            + "@JpaUnit\n"
             + "public class "
             + claseFactory
-            + "UnitTest {\r\n"
-            + "\r\n"
+            + "IT {\n"
+            + "\n"
             + b
-            + "\r\n"
-            + "  private "
+            + "\n"
+            + "\n"
+            + "@Inject private "
             + claseFactory
-            + " underTest;\r\n"
-            + "\r\n"
-            + "  @Before\r\n"
-            + "  public final void setUp() {\r\n"
-            + "    underTest = new "
-            + claseFactoryDefault+ "();\r\n"
-            + "  }\r\n"
-            + "\r\n"
-            + "  @Test\r\n"
-            + "  public final void testCreate"
+            + " factory;\n"
+            +"  @Inject private "+clase+"Repository repo;" 
+            + "\n\n"
+            + "private "+clase+" object; \n"
+            +"\n" + 
+            "  @After\n" + 
+            "  public void tearDown() throws Exception {\n" + 
+            "    if (object != null) {\n" + 
+            "      try {\n" + 
+            "        repo.remove(object.getId());\n" + 
+            "      } catch (AggregateNotFoundException | EntityNotFoundException e) {\n" + 
+            "        // launched when object not exists in repo\n" + 
+            "      }\n" + 
+            "    }\n" + 
+            "  }\n"
+            + "  @Test\n"
+            +"  public void testCreate"
             + clase
-            + "() {\r\n"
-            + "\r\n"
-            + "    final "
-            + clase
-            + " test = underTest."
+            + "() throws Exception {\n"
+            + "\n"
+            + " object = factory."
             + nameMethod
             + "("
             + d
-            + ");\r\n"
-            + "    assertThat(test).isNotNull();\r\n"
+            + ");\n"
+            + "    assertThat(object).isNotNull();\n"
             + asserts
-            + "  }\r\n"
-            + "}\r\n"
+            + "\n" 
+            +"    "+clase+" repoObject = repo.get(object.getId()).get();\n" 
+            +"    assertThat(object.getId()).isNotNull().isEqualTo(repoObject.getId());\n" 
+            + "}\n"
+            + "}\n"
             + "";
     ArrayList<String> clases = new ArrayList<>();
     clases.add("PartState");
@@ -122,5 +152,4 @@ public class Factory {
       }
     }
   }
-
 }

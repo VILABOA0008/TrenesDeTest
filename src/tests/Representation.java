@@ -94,7 +94,7 @@ public class Representation {
             new ArrayList(Arrays.asList(types)),
             new ArrayList<>());
 
-    String equals = Agregador.oldEquals(claseRepresentation);
+    String equals = Agregador.newEquals(claseRepresentation);
 
     d = d.substring(0, d.length() - 1);
     String representation =

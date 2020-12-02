@@ -28,7 +28,7 @@ public class GetInfo {
             + "@RunWith(MockitoJUnitRunner.class)\r\n"
             + "public class "
             + claseSinId
-            + "IdUnitTest {\r\n"
+            + "IdIT {\r\n"
             + "\r\n"
             + "  @Mock\r\n"
             + "  MappingContext<Integer, "
@@ -115,8 +115,7 @@ public class GetInfo {
   }
 
   public static void testFactoriesOld(String url, String pack, String clase) throws Exception {
-
-    url = url + pack;
+//    url = url + pack;
     Class leer = Class.forName(url + "." + clase);
     Method m = null;
     Method[] methods = leer.getDeclaredMethods();
@@ -144,7 +143,7 @@ public class GetInfo {
         types[c] = g.getType().getSimpleName();
         vars[c] = g.getName();
       }
-      Factory.FactoryTest(pack, clase, types, vars, m.getName());
+      Factory.FactoryTest(url,pack, clase, types, vars, m.getName());
     }
   }
 
@@ -183,7 +182,7 @@ public class GetInfo {
     ArrayList<String> toStringTypes = new ArrayList<>();
     ArrayList<String> vars = new ArrayList<>();
     ArrayList<String> varsTypes = new ArrayList<>();
-    url = url + pack;
+//    url = url + pack;
     Class leer = Class.forName(url + "." + clase);
     for (int i = 0; i < leer.getDeclaredFields().length; i++) {
 

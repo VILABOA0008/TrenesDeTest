@@ -1,5 +1,6 @@
 package AggregateIdTest;
 
+
 public class IdClass {
 
   public static void Id(String output, String clase, String id) {
@@ -9,8 +10,7 @@ public class IdClass {
             + clase.toLowerCase()
             + ";\n"
             + "\r\n"
-            + "import org.assertj.core.api.Assertions;\r\n"
-            + "import static org.assertj.core.api.Assertions.assertThat; "
+            + "import static org.assertj.core.api.Assertions.assertThat;\r\n"
             + "import org.junit.Before;\r\n"
             + "import org.junit.Test;\r\n"
             + "import org.junit.runner.RunWith;\r\n"
@@ -46,9 +46,9 @@ public class IdClass {
             + "\r\n"
             + "  @Test\r\n"
             + "  public void testEmptyConstructor() throws Exception {\r\n"
-            + "    new "
+            + "    assertThat(new "
             + id
-            + "();\r\n"
+            + "()).isNotNull();\r\n"
             + "  }\r\n"
             + "\r\n"
             + "  @Test\r\n"
@@ -64,7 +64,7 @@ public class IdClass {
             + "\r\n"
             + "  @Test\r\n"
             + "  public void testId() {\r\n"
-            + "    Assertions.assertThat(underTest.getId()).isNotNull().isEqualTo(TEST_INTEGER);\r\n"
+            + "    assertThat(underTest.getId()).isNotNull().isEqualTo(TEST_INTEGER);\r\n"
             + "  }\r\n"
             + "  \n@Test\r\n"
             + "  public void testOptional() throws Exception {\r\n"

@@ -7,12 +7,12 @@ import java.io.IOException;
 public class Escribir2 {
 
   public static void escribir(String ruta, String texto,String clase) {
-
+//System.exit(0);
     System.err.println(clase+"\n\n\n"+texto+"\n\n\n\n\n");
 //    ruta="C:\\Users\\pabcos\\Documents\\FactorioTes\\src\\testsss";
     System.err.println(ruta);
     File archivo = new File(ruta);
-    archivo.mkdir();
+//    archivo.mkdir();
     archivo=new File(archivo.getPath()+"\\"+clase+".java");
     //       if(!archivo.exists()){
     try {

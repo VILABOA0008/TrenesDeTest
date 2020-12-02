@@ -4,12 +4,11 @@ import java.io.File;
 
 public class Main {
   
-  public static final String PACK = "shiftreview";
-  public static final String CLASE = "ShiftReviewRepresentation";
-  public static final String PACKAGE = "com.ctag.paperless.rest."+PACK;
+  public static final String PACK = "realtimesystemmonitoring";
+  public static final String CLASE = "RealTimeSystemMonitoringFactory";
+  public static final String PACKAGE = "com.ctag.paperless.psa.domain.model."+PACK;
   public static final String URL_FILES =
-      "C:\\GIT\\PAPERLESS_old\\PDV_EMB\\PDV_EMB\\paperless\\paperless-seed\\src\\main"
-          + "\\java\\com\\ctag\\paperless\\rest\\"+PACK;
+      "C:\\GIT\\PEI-BE\\pei-specs\\src\\main\\java\\com\\ctag\\paperless\\psa\\domain\\model\\"+PACK;
 
   public static void main(String[] args) throws Exception {
 
@@ -33,10 +32,10 @@ public class Main {
         classPakage = i.getName();
         if (clase != null) {
           classPakage = classPakage.toLowerCase().replace(".java", "");
-          //          GetInfo.testAgregados(bigPackage, classPakage, clase);
-          //            GetInfo.testFactoriesOld(bigPackage, classPakage, clase);
-          //            GetInfo.testAgregadoIdOld(bigPackage, classPakage, clase);
-          GetInfo.testRepresentationOld(bigPackage, clase);
+//                      GetInfo.testAgregados(bigPackage, classPakage, clase);
+                      GetInfo.testFactoriesOld(bigPackage, classPakage, clase);
+//                      GetInfo.testAgregadoIdOld(bigPackage, classPakage, clase);
+//                      GetInfo.testRepresentationOld(bigPackage, clase);
         }
         for (File q : i.listFiles()) {
           if (q.getName().contains("Id")) {

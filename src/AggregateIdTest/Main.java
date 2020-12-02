@@ -5,9 +5,11 @@ import java.io.File;
 public class Main {
 
   public static void main(String[] args) throws Exception {
+
+
     String s; 
-    String output="C:\\GIT\\FERRAGE\\PdV_FER\\psa-fer\\psa-fer-specs\\src\\main\\java\\AggregateIdTest\\aqui";
-    String url="C:\\GIT\\FERRAGE\\PdV_FER\\psa-fer\\psa-fer-specs\\src\\main\\java\\com\\ctag\\paperless\\psa\\ferrage\\domain\\model";
+    String output="C:\\GIT\\PEI-BE\\pei-specs\\src\\test\\java\\ut\\AggregateIdTest\\test";
+    String url="C:\\GIT\\PEI-BE\\pei-specs\\src\\main\\java\\com\\ctag\\paperless\\psa\\domain\\model";
     File a=new File(url);
    for (File i : a.listFiles()) {   
       for (File q : i.listFiles()) {   
